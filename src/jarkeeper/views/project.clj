@@ -47,7 +47,7 @@
      [:title (str "Jarkeeper: " (:name project))]
      (common-views/common-head)
      (common-views/ga)
-     (include-css "https://cdn.jarkeeper.com/app.css")]
+     (include-css "/app.css")]
     [:body
       (common-views/header)
       [:article.project-content
