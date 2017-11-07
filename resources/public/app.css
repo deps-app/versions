@@ -608,7 +608,7 @@ body > header.header > .content{width:700px;height:100%}
 body > header.header nav{position:absolute;right:0;top:-5px;height:100%;}
 body > header.header nav ul{height:100%;}
 body > header.header nav ul li{height:100%;display:inline-block;text-transform:uppercase;list-style-type:none;margin:0 10px;padding-top:25px;padding-left:10px;padding-right:10px;}
-body > header.header nav ul li.active,body > header.header nav ul li:hover{background-color:#9b4dca;color:#fff;}
+body > header.header nav ul li.active,body > header.header nav ul li:hover{background-color:#3d4773;color:#fff;}
 body > header.header nav ul li.active a,body > header.header nav ul li:hover a,body > header.header nav ul li.active a:visited,body > header.header nav ul li:hover a:visited{color:#fff !important}
 body > header.header nav ul li a,body > header.header nav ul li a:visited{color:#000 !important;font-weight:bold;font-size:18px;line-height:1.2}
 body > footer.row p.licence{font-style:italic;color:#3a434a;margin:35px 12px 20px}
@@ -616,7 +616,7 @@ body > footer.row p.licence{font-style:italic;color:#3a434a;margin:35px 12px 20p
 .row > .content a{color:#eb4d94;}
 .row > .content a:visited{color:#9e0047}
 article.post-content h1,article.docs-content h1,article.project-content h1{font-weight:bold;font-size:18px;line-height:1.2;text-transform:uppercase}
-article.post-content h2,article.docs-content h2,article.project-content h2{margin-top:35px;margin-bottom:15px;font-weight:bold;font-size:18px;line-height:1.2;color:#9b4dca}
+article.post-content h2,article.docs-content h2,article.project-content h2{margin-top:35px;margin-bottom:15px;font-weight:bold;font-size:18px;line-height:1.2;color:#3d4773}
 article.post-content header h2,article.docs-content header h2,article.project-content header h2{color:#000;font-weight:normal}
 article.post-content ul,article.docs-content ul,article.project-content ul,article.post-content ol,article.docs-content ol,article.project-content ol{list-style-position:inside}
 article.post-content code,article.docs-content code,article.project-content code,article.post-content pre[class="brush: clojure"],article.docs-content pre[class="brush: clojure"],article.project-content pre[class="brush: clojure"],article.post-content pre[class="brush: shell"],article.docs-content pre[class="brush: shell"],article.project-content pre[class="brush: shell"],article.post-content div.highlight,article.docs-content div.highlight,article.project-content div.highlight{font-family:Courier,monospace;font-weight:normal;color:#99eb52;background-color:#3a434a;display:block;margin:15px;padding:10px 15px;}
@@ -635,7 +635,7 @@ span.version{font-weight:normal;font-size:.8em;margin-left:20px}
 section.summary{margin-bottom:1em;}
 section.summary ul li{list-style:none;display:inline-block}
 section.summary ul span{vertical-align:middle}
-span.number{margin-left:10px;margin-right:5px;color:#9b4dca}
+span.number{margin-left:10px;margin-right:5px;color:#3d4773}
 span.status{width:16px;height:16px;display:inline-block;border-radius:2px;}
 span.status.up-to-date{background-color:#99eb52}
 span.status.out-of-date{background-color:#eb4d94}
@@ -644,16 +644,16 @@ table td.status-column{text-align:center}
 table tbody{font-size:1.1em}
 form.find-form{text-align:center;}
 form.find-form label{font-size:1.1em}
-button{background-color:#1cb8e8;color:#fff;text-transform:uppercase}
+button{background-color:#fff;color:#3d4773;text-transform:uppercase}
 #repo-url{height:38px;padding:0 10px}
 article.project-content header{position:relative;}
 article.project-content header .badges{position:absolute;right:0;top:10px;}
 article.project-content header .badges img{margin-left:10px}
-a{color:#9b4dca}
+a{color:#3d4773}
 section.installation-instructions > code{-webkit-user-select:all;-moz-user-select:all;-ms-user-select:all;user-select:all}
-article.index-content{background:#9b4dca;border-top:1px solid #14a3d0;border-bottom:1px solid #14a3d0;padding:60px 0;margin:30px 0;}
-article.index-content h1{color:#013d4f;font-weight:normal;text-transform:none;text-align:center;font-size:30px;margin-bottom:30px;font-family:'PT Sans',sans-serif}
+article.index-content{background:#3d4773;border-top:1px solid #14a3d0;border-bottom:1px solid #14a3d0;padding:60px 0;margin:30px 0;}
+article.index-content h1{color:#fff;font-weight:normal;text-transform:none;text-align:center;font-size:30px;margin-bottom:30px;font-family:'PT Sans',sans-serif}
 article.index-content .find-form{margin-bottom:0;}
 article.index-content .find-form label{color:#fff;margin-bottom:0}
 article.index-content .find-form input{border-color:#2284a1;margin-bottom:0}
-article.index-content .find-form button{background-color:#7f4be1;float:left;margin-bottom:0}
+article.index-content .find-form button{background-color:#fff;float:left;margin-bottom:0}
