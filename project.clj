@@ -22,7 +22,7 @@
                  [clj-http "2.0.0"]]
   :main jarkeeper.core
   :ring {:handler jarkeeper.core/app}
-  :plugins [[lein-ring "0.9.7"]
+  :plugins [[lein-ring "0.12.1"]
             [jonase/eastwood "0.2.1"]
             [lein-kibit "0.1.2"]]
   :profiles {:dev  {:dependencies [[ring-mock "0.1.5"]
