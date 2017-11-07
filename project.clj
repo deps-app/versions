@@ -2,7 +2,7 @@
   :description "Identify outdated dependencies in your Clojure project."
   :url "https://versions.deps.co.com"
   :license {:name "Eclipse Public License"
-            :url "http://www.eclipse.org/legal/epl-v10.html"}
+            :url  "http://www.eclipse.org/legal/epl-v10.html"}
   :min-lein-version "2.7.0"
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [compojure "1.4.0"]
@@ -20,13 +20,11 @@
                  [matchbox "0.0.8-SNAPSHOT"]
                  [clj-http "2.0.0"]]
   :main jarkeeper.core
-  :ring {:handler jarkeeper.core/app }
+  :ring {:handler jarkeeper.core/app}
   :plugins [[lein-ring "0.9.7"]
             [jonase/eastwood "0.2.1"]
             [lein-kibit "0.1.2"]]
-  :profiles {
-    :dev {
-      :dependencies [[ring-mock "0.1.5"]
-                     [ring/ring-devel "1.4.0"]]}
-    :prod {
-      :ring {:open-browser? false, :stacktraces? false, :auto-reload? false}}})
+  :profiles {:dev  {:dependencies [[ring-mock "0.1.5"]
+                                   [ring/ring-devel "1.4.0"]]
+                    :ring {:open-browser? true :stacktraces? true :auto-reload? true}}
+             :prod {:ring {:open-browser? false, :stacktraces? false, :auto-reload? false}}})
