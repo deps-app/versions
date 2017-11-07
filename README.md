@@ -5,7 +5,7 @@
 
 Versions is a tool for tracking your Clojure project's dependencies. You can add a badge to your GitHub README to show whether your dependencies are current or out of date.
 
-Versions is based off the fine work that [Hashobject](http://hashobject.com) has done on [Jarkeeper](https://github.com/hashobject/jarkeeper.com). Versions was forked and launched after the Jarkeeper service stopped running.
+Versions is based off the fine work that [Hashobject](http://hashobject.com) has done on [Jarkeeper](https://github.com/hashobject/jarkeeper.com). Versions was forked and launched after the Jarkeeper service stopped running in late 2017.
 
 ## Inspirations
 
