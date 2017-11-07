@@ -1,1 +1,2 @@
-web: lein trampoline ring server
+web: lein trampoline with-profile prod ring server
+
