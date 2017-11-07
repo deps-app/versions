@@ -1,6 +1,6 @@
 (defproject co.deps/versions "0.6.0-SNAPSHOT"
   :description "Identify outdated dependencies in your Clojure project."
-  :url "https://versions.deps.co.com"
+  :url "https://versions.deps.co"
   :license {:name "Eclipse Public License"
             :url  "http://www.eclipse.org/legal/epl-v10.html"}
   :min-lein-version "2.7.0"
