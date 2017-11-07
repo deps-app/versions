@@ -18,20 +18,28 @@
   :dependencies [[org.clojure/clojure \"1.6.0\"]]
   :foo #(throw \"MUST NOT BE EVALUATED\"))")
 
+(def project-clj-eval2 "
+#=(java.lang.System/exit 5)
+")
+
 (deftest read-project-clj-test
   (is (= '(defproject jarkeeper "0.5.1-SNAPSHOT" :dependencies [[org.clojure/clojure "1.6.0"]])
          (with-open [rdr (PushbackReader. (io/reader (.getBytes project-clj-basic)))]
            (read-lein-project (read-file rdr)))))
 
   (is (= '(defproject jarkeeper "0.5.1-SNAPSHOT" :dependencies [[org.clojure/clojure "1.6.0"]])
-        (with-open [rdr (PushbackReader. (io/reader (.getBytes project-clj-with-extra-defs)))]
-          (read-lein-project (read-file rdr)))))
+         (with-open [rdr (PushbackReader. (io/reader (.getBytes project-clj-with-extra-defs)))]
+           (read-lein-project (read-file rdr)))))
 
   (is (= '(defproject jarkeeper "0.5.1-SNAPSHOT"
-            :dependencies [[org.clojure/clojure "1.6.0"]]
-            :foo (fn* [] (throw "MUST NOT BE EVALUATED")))
+                      :dependencies [[org.clojure/clojure "1.6.0"]]
+                      :foo (fn* [] (throw "MUST NOT BE EVALUATED")))
          (with-open [rdr (PushbackReader. (io/reader (.getBytes project-clj-eval)))]
-           (read-lein-project (read-file rdr))))))
+           (read-lein-project (read-file rdr)))))
+
+  (is (thrown-with-msg? RuntimeException #"EvalReader not allowed when \*read-eval\* is false\."
+                        (with-open [rdr (PushbackReader. (io/reader (.getBytes project-clj-eval2)))]
+                          (read-lein-project (read-file rdr))))))
 
 (def build-boot "
   (set-env! :dependencies [[adzerk-oss/boot-cljs \"1.7.48-6\"]])")
@@ -40,6 +48,10 @@
   (println \"foo\")
   (set-env! :dependencies [[adzerk-oss/boot-cljs \"1.7.48-6\"]])")
 
+(def build-boot-eval "
+#=(java.lang.System/exit 6)
+")
+
 (deftest read-boot-deps-test
   (is (= '((set-env! :dependencies [[adzerk-oss/boot-cljs "1.7.48-6"]]))
          (with-open [rdr (PushbackReader. (io/reader (.getBytes build-boot)))]
@@ -47,13 +59,18 @@
 
   (is (= '((println "foo") (set-env! :dependencies [[adzerk-oss/boot-cljs "1.7.48-6"]]))
          (with-open [rdr (PushbackReader. (io/reader (.getBytes build-boot-env-not-first)))]
-           (doall (read-file rdr))))) )
+           (doall (read-file rdr))))))
 
-(deftest read-boot-deps-test
+(deftest read-boot-deps-test2
   (is (= '[adzerk-oss/boot-cljs "1.7.48-6"]
          (read-boot-deps '((println "foo") (set-env! :dependencies [[adzerk-oss/boot-cljs "1.7.48-6"]])))))
 
   (testing "read-build-deps can be used when reading"
     (is (= '[adzerk-oss/boot-cljs "1.7.48-6"]
            (with-open [rdr (PushbackReader. (io/reader (.getBytes build-boot-env-not-first)))]
-             (read-boot-deps (read-file rdr)))))) )
+             (read-boot-deps (read-file rdr)))))))
+
+(deftest read-boot-eval
+  (is (thrown-with-msg? RuntimeException #"EvalReader not allowed when \*read-eval\* is false\."
+                        (with-open [rdr (PushbackReader. (io/reader (.getBytes build-boot-eval)))]
+                          (read-lein-project (read-file rdr))))))
