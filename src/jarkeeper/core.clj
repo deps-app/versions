@@ -164,9 +164,9 @@
       (wrap-resource "public")
       (wrap-base-url)
       (wrap-defaults (assoc-in site-defaults [:security :anti-forgery] false))
-      (ssl/wrap-forwarded-scheme)
       (cond/if production? ssl/wrap-ssl-redirect)
-      (cond/if production? ssl/wrap-hsts)))
+      (cond/if production? ssl/wrap-hsts)
+      (ssl/wrap-forwarded-scheme)))
 
 (defn -main [& args]
   (let [ip (get (System/getenv) "OPENSHIFT_CLOJURE_HTTP_IP" "0.0.0.0")
