@@ -41,6 +41,23 @@
       [:th {:width "90"} ""]]]
    (render-deps items)])
 
+(defn link
+  ([project]
+   (str "https://versions.deps.co/"
+        (:repo-owner project)
+        "/"
+        (:repo-name project)))
+  ([project suffix]
+   (str "https://versions.deps.co/"
+        (:repo-owner project)
+        "/"
+        (:repo-name project)
+        "/"
+        suffix)))
+
+(defn md-image [title image link]
+  (format "[![%s](%s)](%s)" title image link))
+
 (defn index [project]
   (html5 {:lang "en"}
     [:head
@@ -77,16 +94,7 @@
        [:section.installation-instructions.row
         [:h2 "Markdown with SVG image"]
         [:code
-           (str "[![Dependencies Status]"
-                "(https://jarkeeper.com/"
-                (:repo-owner project)
-                "/"
-                (:repo-name project)
-                "/status.svg)](https://jarkeeper.com/"
-                (:repo-owner project)
-                "/"
-                (:repo-name project)
-                ")")]
+         (md-image "Dependencies Status" (link project "status.svg") (link project))]
         [:h2 "HTML with SVG image"]
         [:code
            (escape-html
