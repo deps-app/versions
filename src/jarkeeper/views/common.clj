@@ -36,4 +36,4 @@
 (defn header []
   [:header.header.row
    [:div
-    [:a {:href "https://versions.deps.co"}[:div.logo]]]])
+    [:a {:href "/"}[:div.logo]]]])
