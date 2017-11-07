@@ -11,7 +11,7 @@ pom.xml.asc
 .lein-plugins
 .lein-repl-history
 .idea/
-jarkeeper.iml
+versions.iml
 .DS_Store
 frontend/node_modules/
 lein.bat

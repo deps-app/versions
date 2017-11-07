@@ -17,23 +17,23 @@
   [:footer.footer.row
    [:div.small-12.columns
     [:p "Brought to you by "
-      [:a {:href "http://hashobject.com/"} "Hashobject team"] "."]
+      [:a {:href "https://www.deps.co/"} "Deps - Private Hosted Maven Repositories"] "."]
     [:p
-     [:a {:href "http://github.com/hashobject/jarkeeper.com"} "Jarkeeper"]
+     [:a {:href "http://github.com/deps-app/versions"} "Versions"]
      " is an open source project hosted on GitHub."]]])
 
 (defn ga []
   [:script "
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+   })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-    ga('create', 'UA-44209834-1', 'jarkeeper.com');
+    ga('create', 'UA-89420342-2', 'auto');
     ga('send', 'pageview');
    "])
 
 (defn header []
   [:header.header.row
    [:div
-    [:a {:href "https://jarkeeper.com"}[:div.logo]]]])
+    [:a {:href "https://versions.deps.co"}[:div.logo]]]])

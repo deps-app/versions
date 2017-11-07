@@ -44,7 +44,7 @@
 (defn index [project]
   (html5 {:lang "en"}
     [:head
-     [:title (str "Jarkeeper: " (:name project))]
+     [:title (str "Deps Versions: " (:name project))]
      (common-views/common-head)
      (common-views/ga)
      (include-css "/app.css")]
