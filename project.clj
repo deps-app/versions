@@ -17,6 +17,7 @@
                  [slingshot/slingshot "0.12.2"]
                  [environ "1.0.1"]
                  [clj-rollbar "0.0.3"]
+                 [ring.middleware.conditional "0.2.0"]
                  [matchbox "0.0.8-SNAPSHOT"]
                  [clj-http "2.0.0"]]
   :main jarkeeper.core
@@ -26,5 +27,5 @@
             [lein-kibit "0.1.2"]]
   :profiles {:dev  {:dependencies [[ring-mock "0.1.5"]
                                    [ring/ring-devel "1.4.0"]]
-                    :ring {:open-browser? true :stacktraces? true :auto-reload? true}}
+                    :ring {:open-browser? true :stacktraces? true :auto-reload? true :port 3002}}
              :prod {:ring {:open-browser? false, :stacktraces? false, :auto-reload? false}}})

@@ -2,6 +2,8 @@
   (:require [compojure.core :refer [defroutes GET POST PUT DELETE HEAD]]
             [ring.middleware.resource :refer [wrap-resource]]
             [ring.middleware.json :refer [wrap-json-response]]
+            [ring.middleware.ssl :as ssl]
+            [ring.middleware.conditional :as cond]
             [hiccup.middleware :refer [wrap-base-url]]
             [ring.middleware.defaults :refer :all]
             [ring.adapter.jetty :refer [run-jetty]]
@@ -153,12 +155,18 @@
   (GET "/:any" []
        (resp/redirect "/")))
 
+(defn production? [req]
+  (= (:server-name req) "versions.deps.co"))
+
 (def app
   (-> #'app-routes
-     (wrap-json-response)
-     (wrap-resource "public")
-     (wrap-base-url)
-     (wrap-defaults (assoc-in site-defaults [:security :anti-forgery] false))))
+      (wrap-json-response)
+      (wrap-resource "public")
+      (wrap-base-url)
+      (wrap-defaults (assoc-in site-defaults [:security :anti-forgery] false))
+      (ssl/wrap-forwarded-scheme)
+      (cond/if production? ssl/wrap-ssl-redirect)
+      (cond/if production? ssl/wrap-hsts)))
 
 (defn -main [& args]
   (let [ip (get (System/getenv) "OPENSHIFT_CLOJURE_HTTP_IP" "0.0.0.0")
