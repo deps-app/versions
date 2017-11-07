@@ -10,29 +10,30 @@
   [:link {:rel "icon" :type "image/png" :sizes size :href (format "/images/logos/favicon-%s.png" size)}])
 
 (defn common-head []
-  '([:meta {:charset "utf-8"}]
-     [:meta {:name "description" :content "Identifies out of date dependencies for Clojure projects hosted on GitHub"}]
-     [:meta {:name "keywords" :content "clojure, dependencies, version, up to date version, out of date version"}]
-     [:meta {:http-equiv "X-UA-Compatible" :content "IE=edge,chrome=1"}]
-     [:meta {:name "viewport" :content "width=device-width, initial-scale=1.0, user-scalable=no"}]
-     [:meta {:name "author" :content "Deps"}]
-     [:link {:rel "shortcut icon" :href "/favicon.ico"}]
+  (list
+    [:meta {:charset "utf-8"}]
+    [:meta {:name "description" :content "Identifies out of date dependencies for Clojure projects hosted on GitHub"}]
+    [:meta {:name "keywords" :content "clojure, dependencies, version, up to date version, out of date version"}]
+    [:meta {:http-equiv "X-UA-Compatible" :content "IE=edge,chrome=1"}]
+    [:meta {:name "viewport" :content "width=device-width, initial-scale=1.0, user-scalable=no"}]
+    [:meta {:name "author" :content "Deps"}]
+    [:link {:rel "shortcut icon" :href "/favicon.ico"}]
 
-     (apple-touch-icon "57x57")
-     (apple-touch-icon "114x114")
-     (apple-touch-icon "72x72")
-     (apple-touch-icon "144x144")
-     (apple-touch-icon "60x60")
-     (apple-touch-icon "120x120")
-     (apple-touch-icon "76x76")
-     (apple-touch-icon "152x152")
+    (apple-touch-icon "57x57")
+    (apple-touch-icon "114x114")
+    (apple-touch-icon "72x72")
+    (apple-touch-icon "144x144")
+    (apple-touch-icon "60x60")
+    (apple-touch-icon "120x120")
+    (apple-touch-icon "76x76")
+    (apple-touch-icon "152x152")
 
-     (favicon "196x196")
-     (favicon "128x128")
-     (favicon "96x96")
-     (favicon "32x32")
-     (favicon "16x16")
-     ))
+    (favicon "196x196")
+    (favicon "128x128")
+    (favicon "96x96")
+    (favicon "32x32")
+    (favicon "16x16")
+    ))
 
 (defn common-footer []
   [:footer.footer.row
