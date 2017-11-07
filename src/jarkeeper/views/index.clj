@@ -9,14 +9,14 @@
 (defn index []
   (html5 {:lang "en"}
     [:head
-     [:title "Jarkeeper: identify out of date dependecies!"]
+     [:title "Versions by Deps: identify out of date dependencies"]
      (common-views/common-head)
      (common-views/ga)
      (include-css "/app.css")]
     [:body
       (common-views/header)
       [:article.index-content
-       [:h1 "Deps Versions identifies outdated dependencies in your Clojure project."]
+       [:h1 "Versions by Deps identifies outdated dependencies in your Clojure project."]
        [:form.find-form {:method "POST" :action "find"}
         [:div.row
          [:div.small-3.columns
