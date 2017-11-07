@@ -1,9 +1,9 @@
-(defproject jarkeeper "0.6.0-SNAPSHOT"
+(defproject co.deps/versions "0.6.0-SNAPSHOT"
   :description "Identify outdated dependencies in your Clojure project."
-  :url "http://jarkeeper.com"
+  :url "https://versions.deps.co.com"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :min-lein-version "2.0.0"
+  :min-lein-version "2.7.0"
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [compojure "1.4.0"]
                  [hiccup "1.0.5"]

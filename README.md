@@ -1,15 +1,11 @@
-# jarkeeper.com
+# Versions by Deps
 
-[![Dependencies Status](https://jarkeeper.com/hashobject/jarkeeper.com/status.svg)](http://jarkeeper.com/hashobject/jarkeeper.com)
-[![Circle CI](https://circleci.com/gh/hashobject/jarkeeper.com.svg?style=svg)](https://circleci.com/gh/hashobject/jarkeeper.com)
-[![Chat](http://chat.gitrun.com/images/gitchat-badge.svg)](http://chat.gitrun.com/room/hashobject/jarkeeper.com/11)
+[![Dependencies Status](https://versions.deps.co/deps-app/versions/status.svg)](https://versions.deps.co/deps-app/versions)
+[![Circle CI](https://circleci.com/gh/deps-app/versions.svg?style=svg)](https://circleci.com/gh/deps-app/versions)
 
-## TODO
+Versions is a tool for tracking your Clojure project's dependencies. You can add a badge to your GitHub README to show whether your dependencies are current or out of date.
 
-  * add support for webhooks. regenerate page after code was pushed.
-  * add github auth. we can send notification to owner that deps were outdated.
-  * add checks for alpha/beta versions, snapshots
-
+Versions is based off the fine work that [Hashobject](http://hashobject.com) has done on [Jarkeeper](https://github.com/hashobject/jarkeeper.com). Versions was forked and launched after the Jarkeeper service stopped running.
 
 ## Inspirations
 
@@ -18,22 +14,8 @@
   * https://david-dm.org
   * https://gemnasium.com/
 
-
-## Ideas
-
-  * amount of downloads last day, week, month
-  * new version publish dates
-  * commits activity/density
-  * number of contributors - basically we want to know if project is actively maintained
-  * we want to know how many projects use current one as dependency
-  * look into ClojureSphere API  - https://github.com/jkk/clojuresphere
-  * receive some notification when new versions are available
-  * update some dedicated branch with new versions so they can be tested by continuous integration system for early feedback
-  * use https://github.com/jonase/eastwood to analyze code
-
-
 ## License
 
-Copyright © 2013-2017 Hashobject Ltd (team@hashobject.com).
+Copyright © 2013-2017 Hashobject Ltd (team@hashobject.com), 2017 [Deps](https://www.deps.co).
 
 Distributed under the [Eclipse Public License](http://opensource.org/licenses/eclipse-1.0).
