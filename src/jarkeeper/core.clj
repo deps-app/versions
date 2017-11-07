@@ -23,7 +23,7 @@
            [java.util Locale TimeZone]))
 
 
-(def fire-root (m/connect "https://jarkeeper.firebaseio.com"))
+(def fire-root (m/connect "https://deps-versions.firebaseio.com"))
 (if (env :firebase-token)
   (m/auth-custom fire-root (env :firebase-token) prn-str))
 
