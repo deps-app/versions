@@ -58,6 +58,12 @@
 (defn md-image [title image link]
   (format "[![%s](%s)](%s)" title image link))
 
+(defn html-image [title image link]
+  (escape-html
+    (hiccup.core/html
+      [:a {:href link :title title}
+       [:img {:src image}]])))
+
 (defn index [project]
   (html5 {:lang "en"}
     [:head
@@ -74,7 +80,7 @@
            [:span.version (:version project)]]
          [:h2 (:description project)]
          [:div.badges
-           [:img {:src (str "/" (:repo-owner project)  "/" (:repo-name project) "/downloads.svg") :alt "Downloads"}]
+           [:img {:src (link project "downloads.svg") :alt "Downloads"}]
            (if (> (:out-of-date (:stats project)) 0)
              [:img {:src "https://cdn.jarkeeper.com/images/out-of-date.svg" :alt "Outdated dependencies"}]
              [:img {:src "https://cdn.jarkeeper.com/images/up-to-date.svg" :alt "Up to date dependencies"}])]]
@@ -93,72 +99,20 @@
 
        [:section.installation-instructions.row
         [:h2 "Markdown with SVG image"]
-        [:code
-         (md-image "Dependencies Status" (link project "status.svg") (link project))]
+        [:code (md-image "Dependencies Status" (link project "status.svg") (link project))]
         [:h2 "HTML with SVG image"]
         [:code
-           (escape-html
-             (str "<a href=\""
-                "https://jarkeeper.com/"
-                (:repo-owner project)
-                "/"
-                (:repo-name project)
-                "\" title=\"Dependencies status\"><img src=\"https://jarkeeper.com/"
-                (:repo-owner project)
-                "/"
-                (:repo-name project)
-                "/status.svg\"></a>"))]]
+         (html-image "Dependencies Status" (link project "status.svg") (link project))]]
       [:section.installation-instructions.row
        [:h2 "Markdown with PNG image"]
-       [:code
-          (str "[![Dependencies Status]"
-               "(https://jarkeeper.com/"
-               (:repo-owner project)
-               "/"
-               (:repo-name project)
-               "/status.png)](https://jarkeeper.com/"
-               (:repo-owner project)
-               "/"
-               (:repo-name project)
-               ")")]
+       [:code (md-image "Dependencies Status" (link project "status.png") (link project))]
        [:h2 "HTML with PNG image"]
        [:code
-          (escape-html
-            (str "<a href=\""
-               "https://jarkeeper.com/"
-               (:repo-owner project)
-               "/"
-               (:repo-name project)
-               "\" title=\"Dependencies status\"><img src=\"https://jarkeeper.com/"
-               (:repo-owner project)
-               "/"
-               (:repo-name project)
-               "/status.png\"></a>"))]]
+        (html-image "Dependencies Status" (link project "status.png") (link project))]]
        [:section.installation-instructions.row
         [:h2 "Clojars downloads badge - Markdown with SVG image"]
-        [:code
-           (str "[![Downloads]"
-                "(https://jarkeeper.com/"
-                (:repo-owner project)
-                "/"
-                (:repo-name project)
-                "/downloads.svg)](https://jarkeeper.com/"
-                (:repo-owner project)
-                "/"
-                (:repo-name project)
-                ")")]
+        [:code (md-image "Downloads" (link project "downloads.svg") (link project))]
         [:h2 "Clojars downloads badge - HTML with SVG image"]
         [:code
-           (escape-html
-             (str "<a href=\""
-                "https://jarkeeper.com/"
-                (:repo-owner project)
-                "/"
-                (:repo-name project)
-                "\" title=\"Downloads\"><img src=\"https://jarkeeper.com/"
-                (:repo-owner project)
-                "/"
-                (:repo-name project)
-                "/downloads.svg\"></a>"))]]
-                ]
+         (html-image "Downloads" (link project "downloads.svg") (link project))]]]
      (common-views/common-footer)]))
