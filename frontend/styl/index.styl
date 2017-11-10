@@ -19,9 +19,11 @@ $additional-grey = #e1e5e8;
 body
   font-size: 14px;
   line-height: 1.4;
-  color: black;
-  font-family: 'PT Sans', Tahoma, sans-serif;
+  font-family: 'karla', sans-serif;
   color: $text-color;
+
+*
+  font-family: 'karla', sans-serif;
 
 div.logo
   margin: 5px auto;
@@ -268,7 +270,16 @@ article.index-content
     text-align: center;
     font-size: 30px;
     margin-bottom: 30px;
-    font-family: 'PT Sans', sans-serif;
+
+  & h2
+    color: white;
+    margin-top: 15px;
+    text-align: center;
+    font-weight: normal;
+    font-size: 25px;
+
+  & a
+    color: white;
 
   & .find-form
     margin-bottom: 0;

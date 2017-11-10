@@ -17,6 +17,7 @@
     [:meta {:http-equiv "X-UA-Compatible" :content "IE=edge,chrome=1"}]
     [:meta {:name "viewport" :content "width=device-width, initial-scale=1.0, user-scalable=no"}]
     [:meta {:name "author" :content "Deps"}]
+    (include-css "https://fonts.googleapis.com/css?family=Karla:400,700" "/app.css")
     [:link {:rel "shortcut icon" :href "/favicon.ico"}]
 
     (apple-touch-icon "57x57")

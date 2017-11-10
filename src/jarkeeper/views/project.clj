@@ -69,8 +69,7 @@
     [:head
      [:title (str "Deps Versions: " (:name project))]
      (common-views/common-head)
-     (common-views/ga)
-     (include-css "/app.css")]
+     (common-views/ga)]
     [:body
       (common-views/header)
       [:article.project-content

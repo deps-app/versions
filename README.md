@@ -1,4 +1,4 @@
-# Versions by Deps
+# Deps Versions
 
 [![Dependencies Status](https://versions.deps.co/deps-app/versions/status.svg)](https://versions.deps.co/deps-app/versions)
 [![Circle CI](https://circleci.com/gh/deps-app/versions.svg?style=svg)](https://circleci.com/gh/deps-app/versions)
