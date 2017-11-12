@@ -18,19 +18,12 @@
             [jarkeeper.views.json :as project-json]
             [environ.core :refer [env]]
             [sentry-clj.ring :as sentry-ring]
-            [matchbox.core :as m]
             [clojure.string :as str]
             [sentry-clj.core :as sentry])
 
   (:import (java.io PushbackReader)
            [java.text SimpleDateFormat]
            [java.util Locale TimeZone]))
-
-
-(def fire-root (m/connect "https://deps-versions.firebaseio.com"))
-(if (env :firebase-token)
-  (m/auth-custom fire-root (env :firebase-token) prn-str))
-
 
 (def last-modified-formatter "EEE, dd MMM yyyy HH:mm:ss zzz")
 
@@ -61,12 +54,6 @@
       (resp/header "cache-control" "no-cache")
       (resp/header "last-modified" (last-modified))
       (resp/header "content-type" "image/svg+xml")))
-
-
-(defn get-ref [type repo-owner repo-name]
-  (let [owner (clojure.string/replace repo-owner #"\." "-")
-        name (clojure.string/replace repo-name #"\." "-")]
-    (m/get-in fire-root [type owner name])))
 
 (defroutes app-routes
   (GET "/" [] (index-view/index))
