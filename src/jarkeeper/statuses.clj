@@ -3,6 +3,8 @@
             [clojure.string :as str]
             [clj-http.client :as client]
             [clojure.tools.logging :as log]
+            [taoensso.carmine :as car]
+            [jarkeeper.redis :refer [wcar*]]
             [ancient-clj.core :as anc])
 
   (:import (java.io PushbackReader)))
@@ -60,8 +62,30 @@
     (catch Exception _
       nil)))
 
+
+(defn dependency-key [dependency]
+  (let [{:keys [group id version-string]} (anc/read-artifact dependency)]
+    (format "%s/%s/%s" group id version-string)))
+
+(defn outdated? [dependency]
+  ;; Check redis for answer for version
+  ;; If redis has it, return it
+  ;; If redis doesn't have it
+  ;;   calculate it
+  ;;   store it for 3600
+  ;;   return it
+
+  (let [k (dependency-key dependency)
+        outdated-info (wcar* (car/get k))]
+    (if (some? outdated-info)
+      ;; Match anc/artifact/outdated? API. We store false, because we can't store nil.
+      (if (false? outdated-info) nil outdated-info)
+      (let [outdated-info (anc/artifact-outdated? dependency {:snapshots? false :qualified? false})]
+        (wcar* (car/setex k 3600 (if (nil? outdated-info) false outdated-info)))
+        outdated-info))))
+
 (defn check-deps [deps]
-  (map #(conj % (anc/artifact-outdated? % {:snapshots? false :qualified? false})) deps))
+  (map #(conj % (outdated? %)) deps))
 
 (defn calculate-stats [deps]
   (let [up-to-date-deps (remove nil? (map (fn [dep] (if (nil? (last dep)) dep nil)) deps))
