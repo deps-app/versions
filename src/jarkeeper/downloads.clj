@@ -38,11 +38,11 @@
 (defn format-downloads [downloads]
   (let [s (str downloads)
         digits (count s)]
-        (if (< digits 5)
-          s
-          (str
-            (apply str (drop-last 3 s))
-            "K"))))
+    (if (< digits 5)
+      s
+      (str
+        (apply str (drop-last 3 s))
+        "K"))))
 
 (defn get-badge [repo-owner repo-name]
   (if-let [downloads (get-downloads repo-owner repo-name)]

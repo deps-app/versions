@@ -49,24 +49,24 @@
 (defn png-status-resp [filepath]
   (log/info "serving status image" filepath)
   (-> filepath
-    (resp/resource-response)
-    (resp/header "cache-control" "no-cache")
-    (resp/header "last-modified" (last-modified))
-    (resp/header "content-type" "image/png")))
+      (resp/resource-response)
+      (resp/header "cache-control" "no-cache")
+      (resp/header "last-modified" (last-modified))
+      (resp/header "content-type" "image/png")))
 
 (defn svg-status-resp [filepath]
   (log/info "serving status image" filepath)
   (-> filepath
-    (resp/resource-response)
-    (resp/header "cache-control" "no-cache")
-    (resp/header "last-modified" (last-modified))
-    (resp/header "content-type" "image/svg+xml")))
+      (resp/resource-response)
+      (resp/header "cache-control" "no-cache")
+      (resp/header "last-modified" (last-modified))
+      (resp/header "content-type" "image/svg+xml")))
 
 
 (defn get-ref [type repo-owner repo-name]
   (let [owner (clojure.string/replace repo-owner #"\." "-")
         name (clojure.string/replace repo-name #"\." "-")]
-      (m/get-in fire-root [type owner name])))
+    (m/get-in fire-root [type owner name])))
 
 (defroutes app-routes
   (GET "/" [] (index-view/index))
@@ -111,7 +111,7 @@
       (project-json/render project)))
 
   (GET "/:any" []
-       (resp/redirect "/")))
+    (resp/redirect "/")))
 
 (defn production? [req]
   (= (:server-name req) "versions.deps.co"))
@@ -147,6 +147,6 @@
       (sentry-ring/wrap-report-exceptions nil {})))
 
 (defn -main [& args]
-  (let [ip   "0.0.0.0"
+  (let [ip "0.0.0.0"
         port (Integer/parseInt (get (System/getenv) "PORT" "3002"))]
     (run-jetty app {:host ip :port port})))

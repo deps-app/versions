@@ -12,9 +12,9 @@
      [:td (second dep)]
      [:td (:version-string (last dep))]
      [:td.status-column
-       (if (nil? (last dep))
-         [:span.status.up-to-date {:title "Up to date"}]
-         [:span.status.out-of-date {:title "Out of date"}])]]))
+      (if (nil? (last dep))
+        [:span.status.up-to-date {:title "Up to date"}]
+        [:span.status.out-of-date {:title "Out of date"}])]]))
 
 (defn- render-stats [stats]
   [:section.summary.row
@@ -33,12 +33,12 @@
 
 (defn- render-table [header items]
   [:table.small-12.columns
-    [:thead
-     [:tr
-      [:th header]
-      [:th {:width "180"} "Current"]
-      [:th {:width "180"} "Latest"]
-      [:th {:width "90"} ""]]]
+   [:thead
+    [:tr
+     [:th header]
+     [:th {:width "180"} "Current"]
+     [:th {:width "180"} "Latest"]
+     [:th {:width "90"} ""]]]
    (render-deps items)])
 
 (defn link

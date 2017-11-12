@@ -30,7 +30,7 @@
            (some (fn [form]
                    (if (= 'defproject (first form))
                      form)))
-))
+           ))
 
 (defn read-project-clj [repo-owner repo-name]
   (try
@@ -66,8 +66,8 @@
 (defn calculate-stats [deps]
   (let [up-to-date-deps (remove nil? (map (fn [dep] (if (nil? (last dep)) dep nil)) deps))
         out-of-date-deps (remove nil? (map (fn [dep] (if (nil? (last dep)) nil dep)) deps))
-        stats {:total (count deps)
-               :up-to-date (count up-to-date-deps)
+        stats {:total       (count deps)
+               :up-to-date  (count up-to-date-deps)
                :out-of-date (count out-of-date-deps)}]
     stats))
 
@@ -75,56 +75,54 @@
   (map (fn [profile-entry]
          (let [profile (val profile-entry)
                profile-name (key profile-entry)]
-               (if (not (starting-num? profile-name))
-                 (if-let [dependencies (concat (:dependencies profile) (:plugins profile))]
-                   (if-let [deps (check-deps dependencies)]
-                     [profile-name deps (calculate-stats deps)])))))
+           (if (not (starting-num? profile-name))
+             (if-let [dependencies (concat (:dependencies profile) (:plugins profile))]
+               (if-let [deps (check-deps dependencies)]
+                 [profile-name deps (calculate-stats deps)])))))
        profiles))
 
 (defn boot-project-map [repo-owner repo-name]
   (let [github-url (str "https://github.com/" repo-owner "/" repo-name)]
-       (if-let [dependencies (read-build-boot repo-owner repo-name)]
-           (do
-             (println "boot-build deps" read-boot-deps)
-             (let [deps (check-deps dependencies)
-                   stats (calculate-stats deps)
-                   result { :boot? true
-                            :name repo-name
-                            :repo-name repo-name
-                            :repo-owner repo-owner
-                            :github-url github-url
-                            :deps deps
-                            :stats stats
-                            }]
-               (log/info "boot project map" result)
-               result)))))
+    (if-let [dependencies (read-build-boot repo-owner repo-name)]
+      (let [deps (check-deps dependencies)
+            _ (println "boot-build deps" read-boot-deps)
+            stats (calculate-stats deps)
+            result {:boot?      true
+                    :name       repo-name
+                    :repo-name  repo-name
+                    :repo-owner repo-owner
+                    :github-url github-url
+                    :deps       deps
+                    :stats      stats
+                    }]
+        (log/info "boot project map" result)
+        result))))
 
 (defn lein-project-map [repo-owner repo-name]
   (let [github-url (str "https://github.com/" repo-owner "/" repo-name)]
-        (if-let [project-clj-content (read-project-clj repo-owner repo-name)]
-            (do
-              (println "project-clj" project-clj-content)
-              (let [[_ project-name version & info] project-clj-content
-                    info-map (apply hash-map info)
-                    deps (check-deps (:dependencies info-map))
-                    plugins (check-deps (:plugins info-map))
-                    profiles (check-profiles (:profiles info-map))
-                    stats (calculate-stats deps)
-                    plugins-stats (calculate-stats plugins)
-                    result (assoc info-map
-                             :lein? true
-                             :name project-name
-                             :repo-name repo-name
-                             :repo-owner repo-owner
-                             :version version
-                             :github-url github-url
-                             :deps deps
-                             :profiles profiles
-                             :plugins plugins
-                             :stats stats
-                             :plugins-stats plugins-stats)]
-                (log/info "project map" result profiles)
-                result)))))
+    (if-let [project-clj-content (read-project-clj repo-owner repo-name)]
+      (let [[_ project-name version & info] project-clj-content
+            _ (println "project-clj" project-clj-content)
+            info-map (apply hash-map info)
+            deps (check-deps (:dependencies info-map))
+            plugins (check-deps (:plugins info-map))
+            profiles (check-profiles (:profiles info-map))
+            stats (calculate-stats deps)
+            plugins-stats (calculate-stats plugins)
+            result (assoc info-map
+                     :lein? true
+                     :name project-name
+                     :repo-name repo-name
+                     :repo-owner repo-owner
+                     :version version
+                     :github-url github-url
+                     :deps deps
+                     :profiles profiles
+                     :plugins plugins
+                     :stats stats
+                     :plugins-stats plugins-stats)]
+        (log/info "project map" result profiles)
+        result))))
 
 (defn project-map [repo-owner repo-name]
   (let [lein-result (future (lein-project-map repo-owner repo-name))
