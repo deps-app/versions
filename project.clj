@@ -19,7 +19,8 @@
                  [ring.middleware.conditional "0.2.0"]
                  [matchbox "0.0.8-SNAPSHOT"]
                  [clj-http "3.7.0"]
-                 [io.sentry/sentry-clj "0.5.1"]]
+                 [io.sentry/sentry-clj "0.5.1"]
+                 [com.taoensso/carmine "2.16.0"]]
   :main jarkeeper.core
   :ring {:handler jarkeeper.core/app}
   :plugins [[lein-ring "0.12.1"]
