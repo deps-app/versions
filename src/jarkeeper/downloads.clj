@@ -6,15 +6,13 @@
 
 (def downloads-svg-file
   (-> "public/images/downloads.svg"
-      io/resource
-      io/file))
+      io/resource))
 
 (def downloads-svg (slurp downloads-svg-file))
 
 (def no-downloads-svg-file
   (-> "public/images/no-downloads.svg"
-      io/resource
-      io/file))
+      io/resource))
 
 (def no-downloads-svg (slurp no-downloads-svg-file))
 
