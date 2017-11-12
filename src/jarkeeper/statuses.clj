@@ -65,7 +65,10 @@
 
 (defn dependency-key [dependency]
   (let [{:keys [group id version-string]} (anc/read-artifact dependency)]
-    (format "%s/%s/%s" group id version-string)))
+    (format "outdated/%s/%s/%s" group id version-string)))
+
+;; TODO: pipeline results checking
+;; TODO: Generalise into a generic cache
 
 (defn outdated? [dependency]
   ;; Check redis for answer for version
@@ -74,7 +77,6 @@
   ;;   calculate it
   ;;   store it for 3600
   ;;   return it
-
   (let [k (dependency-key dependency)
         outdated-info (wcar* (car/get k))]
     (if (some? outdated-info)
