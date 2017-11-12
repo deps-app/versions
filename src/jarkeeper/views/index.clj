@@ -12,7 +12,7 @@
    [:div.example-project
     {:class (str "columns small-12 medium-6 large-4"
                  (when end? " end"))}
-    [:a {:href (str "https://github.com/" slug)}
+    [:a {:href (str "/" slug)}
      title]
     [:br]
     [:a {:href (str "/" slug) :title "Dependencies Status"}
