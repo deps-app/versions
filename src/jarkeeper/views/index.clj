@@ -15,7 +15,7 @@
     [:body
      (common-views/header)
      [:article.index-content
-      [:h1 "Deps Versions identifies outdated dependencies in your Clojure project."]
+      [:h1 "Deps Versions identifies outdated dependencies in your Clojure projects"]
       [:form.find-form {:method "POST" :action "find"}
        [:div.row
         [:div.small-3.columns

@@ -58,5 +58,7 @@
 
 (defn header []
   [:header.header.row
-   [:div
-    [:a {:href "/"} [:div.logo]]]])
+   [:div.logo-collection
+    [:a {:href "/"}
+     [:div.logo]
+     [:h1 "Deps Versions"]]]])

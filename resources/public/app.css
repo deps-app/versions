@@ -602,6 +602,10 @@ ul.icons li [class*=" icon-"] {
 .vi { color: #19177C } /* Name.Variable.Instance */
 .il { color: #666666 } /* Literal.Number.Integer.Long */
 body{font-size:14px;line-height:1.4;font-family:'karla',sans-serif;color:#000}
+div.logo-collection{display:flex;justify-content:center;align-items:center;}
+div.logo-collection h1{margin:0 .2rem;font-weight:normal;font-size:2rem;color:#3d4773}
+div.logo-collection h1:hover,div.logo-collection h1:focus{color:#2795b6}
+div.logo-collection a{display:flex;align-items:center}
 *{font-family:'karla',sans-serif}
 div.logo{margin:5px auto;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGRhdGEtbmFtZT0iTGF5ZXIgMSIgdmlld0JveD0iMCAwIDEwMCAxMDAiIHg9IjBweCIgeT0iMHB4Ij4KICAgIDx0aXRsZT4xMjJhbGw8L3RpdGxlPgogICAgPHJlY3QgZmlsbD0iIzNkNDc3MyIgeD0iNTYuMjUiIHk9IjE0LjMzIiB3aWR0aD0iMzguODMiIGhlaWdodD0iNzEuMzMiPjwvcmVjdD4KICAgIDxyZWN0IGZpbGw9IiMzZDQ3NzMiIHg9IjQuOTIiIHk9IjMwLjMzIiB3aWR0aD0iMTguNSIgaGVpZ2h0PSIzOS4zMyI+PC9yZWN0PgogICAgPHJlY3QgZmlsbD0iIzNkNDc3MyIgeD0iMjcuOTIiIHk9IjIyLjMzIiB3aWR0aD0iMjMuODMiIGhlaWdodD0iNTUuMzMiPjwvcmVjdD4KPC9zdmc+Cg==");width:74px;height:74px}
 body > header.header{height:65px;margin-bottom:30px;text-align:center;}
