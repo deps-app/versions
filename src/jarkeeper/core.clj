@@ -18,7 +18,8 @@
             [jarkeeper.views.json :as project-json]
             [environ.core :refer [env]]
             [clj-rollbar.core :as rollbar]
-            [matchbox.core :as m])
+            [matchbox.core :as m]
+            [clojure.string :as str])
 
   (:import (java.io PushbackReader)
            [java.text SimpleDateFormat]
@@ -159,10 +160,21 @@
   (= (:server-name req) "versions.deps.co"))
 
 (defn wrap-referrer-policy
-  ([handler]
-   (fn [request]
-     (let [response (handler request)]
-       (assoc-in response [:headers "Referrer-Policy"] "strict-origin")))))
+  [handler]
+  (fn [request]
+    (let [response (handler request)]
+      (assoc-in response [:headers "Referrer-Policy"] "strict-origin"))))
+
+(def csp (str/join "; " ["object-src 'none'"
+                         "script-src 'strict-dynamic' 'unsafe-inline' http: https:;"
+                         "base-uri 'none';"
+                         "report-uri https://e33d8929ff48e13fdc2abfafda55bd99.report-uri.com/r/d/csp/enforce"]))
+
+(defn wrap-content-security-policy
+  [handler]
+  (fn [request]
+    (let [response (handler request)]
+      (assoc-in response [:headers "Content-Security-Policy"] csp))))
 
 (def app
   (-> #'app-routes
@@ -170,6 +182,7 @@
       (wrap-resource "public")
       (wrap-base-url)
       (wrap-referrer-policy)
+      #_(wrap-content-security-policy)
       (wrap-defaults (assoc-in site-defaults [:security :anti-forgery] false))
       (cond/if production? ssl/wrap-ssl-redirect)
       (cond/if production? ssl/wrap-hsts)
