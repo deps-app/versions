@@ -5,6 +5,19 @@
             [hiccup.page :refer [html5 include-css include-js]]
             [hiccup.util :refer [escape-html]]))
 
+(defn example-project
+  ([title slug]
+   (example-project title slug false))
+  ([title slug end?]
+   [:div.example-project
+    {:class (str "columns small-12 medium-6 large-4"
+                 (when end? " end"))}
+    [:a {:href (str "https://github.com/" slug)}
+     title]
+    [:br]
+    [:a {:href (str "/" slug) :title "Dependencies Status"}
+     [:img {:src (format "https://versions.deps.co/%s/status.svg" slug)}]]])
+  )
 
 (defn index []
   (html5 {:lang "en"}
@@ -15,24 +28,24 @@
     [:body
      (common-views/header)
      [:article.index-content
-      [:h1 "Deps Versions identifies outdated dependencies in your Clojure projects"]
+      [:div.row
+       [:h1 "Deps Versions identifies outdated dependencies in your Clojure projects"]]
       [:form.find-form {:method "POST" :action "find"}
        [:div.row
-        [:div.small-3.columns
-         [:label.right.inline {:for "repo-url"} "Repo name"]]
-        [:div.small-6.columns
+        [:div.small-12.large-3.columns
+         [:label.inline {:for "repo-url"} "Repo name"]]
+        [:div.small-12.large-6.columns
          [:input#repo-url {:type "text" :name "repo-url" :placeholder "e.x. korma/Korma" :autocomplete "false"}]]
-        [:div.small-3.columns
-         [:button "Check!"]]]]
-      #_ [:h2 "Example projects"]
-      #_[:div.example-project
-       [:a {:href "https://github.com/reagent-project/reagent"}
-        "Reagent"]
-       [:br]
-       [:a {:href "/reagent-project/reagent" :title "Dependencies Status"}
-        [:img {:src "https://versions.deps.co/reagent-project/reagent/status.svg"}]]]
-      #_[:div.example-project
-
-
-       ]]
+        [:div.small-12.large-3.columns
+         [:button "Check!"]]]
+       [:div.row
+        [:h3 "Supports Leiningen and Boot"]]]]
+     [:div.row
+      [:h2 "Example projects"]
+      (example-project "Reagent" "reagent-project/reagent")
+      (example-project "Buddy Sign" "funcool/buddy-sign")
+      (example-project "boot-reload" "adzerk-oss/boot-reload")
+      (example-project "Elastisch" "clojurewerkz/elastisch")
+      (example-project "Honey SQL" "jkk/honeysql")
+      (example-project "Eastwood" "jonase/eastwood" true)]
      (common-views/common-footer)]))
