@@ -158,11 +158,18 @@
 (defn production? [req]
   (= (:server-name req) "versions.deps.co"))
 
+(defn wrap-referrer-policy
+  ([handler]
+   (fn [request]
+     (let [response (handler request)]
+       (assoc-in response [:headers "Referrer-Policy"] "strict-origin")))))
+
 (def app
   (-> #'app-routes
       (wrap-json-response)
       (wrap-resource "public")
       (wrap-base-url)
+      (wrap-referrer-policy)
       (wrap-defaults (assoc-in site-defaults [:security :anti-forgery] false))
       (cond/if production? ssl/wrap-ssl-redirect)
       (cond/if production? ssl/wrap-hsts)
