@@ -169,6 +169,6 @@
       (ssl/wrap-forwarded-scheme)))
 
 (defn -main [& args]
-  (let [ip (get (System/getenv) "OPENSHIFT_CLOJURE_HTTP_IP" "0.0.0.0")
-        port (Integer/parseInt (get (System/getenv) "OPENSHIFT_CLOJURE_HTTP_PORT" "8090"))]
-      (run-jetty app {:host ip :port port})))
+  (let [ip   "0.0.0.0"
+        port (Integer/parseInt (get (System/getenv) "PORT" "3002"))]
+    (run-jetty app {:host ip :port port})))
