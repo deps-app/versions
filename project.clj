@@ -16,13 +16,14 @@
                  [ring/ring-json "0.4.0"]
                  [slingshot/slingshot "0.12.2"]
                  [environ "1.1.0"]
-                 [clj-rollbar "0.0.3"]
                  [ring.middleware.conditional "0.2.0"]
                  [matchbox "0.0.8-SNAPSHOT"]
-                 [clj-http "3.7.0"]]
+                 [clj-http "3.7.0"]
+                 [io.sentry/sentry-clj "0.5.1"]]
   :main jarkeeper.core
   :ring {:handler jarkeeper.core/app}
-  :plugins [[lein-ring "0.12.1"]]
+  :plugins [[lein-ring "0.12.1"]
+            [lein-dotenv "1.0.0"]]
   :profiles {:dev  {:dependencies [[ring-mock "0.1.5"]
                                    [ring/ring-devel "1.6.3"]]
                     :ring {:open-browser? true :stacktraces? true :auto-reload? true :port 3002}}

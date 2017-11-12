@@ -18,3 +18,4 @@ lein.bat
 .nrepl-port
 ssl/
 deploy.yaml
+.env

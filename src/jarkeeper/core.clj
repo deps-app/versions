@@ -17,9 +17,10 @@
             [jarkeeper.views.project :as project-view]
             [jarkeeper.views.json :as project-json]
             [environ.core :refer [env]]
-            [clj-rollbar.core :as rollbar]
+            [sentry-clj.ring :as sentry-ring]
             [matchbox.core :as m]
-            [clojure.string :as str])
+            [clojure.string :as str]
+            [sentry-clj.core :as sentry])
 
   (:import (java.io PushbackReader)
            [java.text SimpleDateFormat]
@@ -74,84 +75,40 @@
 
   (POST "/find" [] repo-redirect)
 
-  (GET "/:repo-owner/:repo-name" [repo-owner repo-name]
-    (try
+  (GET "/:repo-owner/:repo-name" [repo-owner repo-name :as r]
+    (if-let [project (statuses/project-map repo-owner repo-name)]
       (do
-        (log/info "processing" repo-owner repo-name)
-        (m/swap!
-          (get-ref :repos repo-owner repo-name)
-          (fn [c] (if (nil? c) 1 (inc c))))
-        (if-let [project (statuses/project-map repo-owner repo-name)]
-            (do
-              (log/info "project-def" project)
-              (project-view/index project))
-            (do
-              (rollbar/report-message (env :rollbar-token)
-                "production"
-                (str "Repo " repo-owner "/" repo-name "not found") "error")
-              (resp/redirect "/"))))
-      (catch Exception e
-        (do
-          (rollbar/report-exception (env :rollbar-token) "production" e)
-          (log/error "error happened during processing" e)
-          (resp/redirect "/")))))
+        (log/info "project-def" project)
+        (project-view/index project))
+      (do
+        (sentry/send-event (assoc (sentry-ring/request->event r nil)
+                             :message "Error while checking project"))
+        (resp/redirect "/"))))
 
   (GET "/:repo-owner/:repo-name/status.png" [repo-owner repo-name]
-    (try
-      (do
-        (m/swap!
-          (get-ref :statuses repo-owner repo-name)
-          (fn [c] (if (nil? c) 1 (inc c))))
-       (let [project (statuses/project-map repo-owner repo-name)
-             out-of-date-count (:out-of-date (:stats project))]
-             (if (> out-of-date-count 0)
-               (png-status-resp "public/images/out-of-date.png")
-               (png-status-resp "public/images/up-to-date.png"))))
-      (catch Exception e
-        (rollbar/report-exception (env :rollbar-token) "production" e)
-        {:status 404})))
+    (let [project (statuses/project-map repo-owner repo-name)
+          out-of-date-count (:out-of-date (:stats project))]
+      (if (> out-of-date-count 0)
+        (png-status-resp "public/images/out-of-date.png")
+        (png-status-resp "public/images/up-to-date.png"))))
 
   (GET "/:repo-owner/:repo-name/status.svg" [repo-owner repo-name]
-    (try
-      (do
-        (m/swap!
-          (get-ref :statuses repo-owner repo-name)
-          (fn [c] (if (nil? c) 1 (inc c))))
-       (let [project (statuses/project-map repo-owner repo-name)
-             out-of-date-count (:out-of-date (:stats project))]
-             (if (> out-of-date-count 0)
-               (svg-status-resp "public/images/out-of-date.svg")
-               (svg-status-resp "public/images/up-to-date.svg"))))
-      (catch Exception e
-        (rollbar/report-exception (env :rollbar-token) "production" e)
-        {:status 404})))
+    (let [project (statuses/project-map repo-owner repo-name)
+          out-of-date-count (:out-of-date (:stats project))]
+      (if (> out-of-date-count 0)
+        (svg-status-resp "public/images/out-of-date.svg")
+        (svg-status-resp "public/images/up-to-date.svg"))))
 
   (GET "/:repo-owner/:repo-name/downloads.svg" [repo-owner repo-name]
-    (try
-      (do
-        (m/swap!
-          (get-ref :downloads repo-owner repo-name)
-          (fn [c] (if (nil? c) 1 (inc c))))
-        (-> (downloads/get-badge repo-owner repo-name)
-            (resp/response)
-            (resp/header "cache-control" "no-cache")
-            (resp/header "last-modified" (last-modified))
-            (resp/header "content-type" "image/svg+xml")))
-      (catch Exception e
-        (rollbar/report-exception (env :rollbar-token) "production" e)
-        {:status 404})))
+    (-> (downloads/get-badge repo-owner repo-name)
+        (resp/response)
+        (resp/header "cache-control" "no-cache")
+        (resp/header "last-modified" (last-modified))
+        (resp/header "content-type" "image/svg+xml")))
 
   (GET "/:repo-owner/:repo-name/status.json" [repo-owner repo-name]
-    (try
-      (do
-        (m/swap!
-          (get-ref :statuses repo-owner repo-name)
-          (fn [c] (if (nil? c) 1 (inc c))))
-        (let [project (statuses/project-map repo-owner repo-name)]
-             (project-json/render project)))
-      (catch Exception e
-        (rollbar/report-exception (env :rollbar-token) "production" e)
-        {:status 404})))
+    (let [project (statuses/project-map repo-owner repo-name)]
+      (project-json/render project)))
 
   (GET "/:any" []
        (resp/redirect "/")))
@@ -186,7 +143,8 @@
       (wrap-defaults (assoc-in site-defaults [:security :anti-forgery] false))
       (cond/if production? ssl/wrap-ssl-redirect)
       (cond/if production? ssl/wrap-hsts)
-      (ssl/wrap-forwarded-scheme)))
+      (ssl/wrap-forwarded-scheme)
+      (sentry-ring/wrap-report-exceptions nil {})))
 
 (defn -main [& args]
   (let [ip   "0.0.0.0"
