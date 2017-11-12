@@ -1,9 +1,9 @@
 (ns jarkeeper.views.index
   (:require [clojure.string :as string]
             [jarkeeper.views.common :as common-views]
+            [jarkeeper.utils :refer [html5]]
             [hiccup.core :refer [html]]
-            [hiccup.page :refer [html5 include-css include-js]]
-            [hiccup.util :refer [escape-html]]))
+            [hiccup.page :refer [include-css include-js]]))
 
 (defn example-project
   ([title slug]

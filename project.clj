@@ -6,7 +6,7 @@
   :min-lein-version "2.7.0"
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [compojure "1.6.0"]
-                 [hiccup "1.0.5"]
+                 [hiccup "2.0.0-alpha1"]
                  [ring/ring-defaults "0.3.1"]
                  [ring/ring-core "1.6.3"]
                  [ring-server "0.5.0"]

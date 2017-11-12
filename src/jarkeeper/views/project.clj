@@ -1,9 +1,9 @@
 (ns jarkeeper.views.project
   (:require [clojure.string :as string]
             [jarkeeper.views.common :as common-views]
+            [jarkeeper.utils :refer [html5]]
             [hiccup.core :refer [html]]
-            [hiccup.page :refer [html5 include-css include-js]]
-            [hiccup.util :refer [escape-html]]))
+            [hiccup.page :refer [include-css include-js]]))
 
 (defn- render-deps [deps]
   (for [dep deps]
@@ -59,59 +59,64 @@
   (format "[![%s](%s)](%s)" title image link))
 
 (defn html-image [title image link]
-  (escape-html
-    (hiccup.core/html
-      [:a {:href link :title title}
-       [:img {:src image}]])))
+  (hiccup.core/html
+    [:a {:href link :title title}
+     [:img {:src image}]]))
+
+(defn head [project]
+  [:head
+   [:title (str "Deps Versions: " (:name project))]
+   (common-views/common-head)
+   (common-views/ga)])
+
+(defn body [project]
+  [:body
+   (common-views/header)
+   [:article.project-content
+    [:header.row
+     [:h1
+      [:a {:href (:github-url project)} (:name project)]
+      [:span.version (:version project)]]
+     [:h2 (:description project)]
+     [:div.badges
+      [:img {:src (link project "downloads.svg") :alt "Downloads"}]
+      (if (> (:out-of-date (:stats project)) 0)
+        [:img {:src "https://cdn.jarkeeper.com/images/out-of-date.svg" :alt "Outdated dependencies"}]
+        [:img {:src "https://cdn.jarkeeper.com/images/up-to-date.svg" :alt "Up to date dependencies"}])]]
+    [:section.dependencies.row
+     (render-stats (:stats project))
+     (render-table "Dependency" (:deps project))
+     (if (> (count (:plugins project)) 0)
+       (list
+         (render-stats (:plugins-stats project))
+         (render-table "Plugin" (:plugins project))))
+     (for [profile (:profiles project)]
+       (if (first profile)
+         (list
+           (render-stats (nth profile 2))
+           (render-table (name (first profile)) (second profile)))))]
+
+    [:section.installation-instructions.row
+     [:h2 "Markdown with SVG image"]
+     [:code (md-image "Dependencies Status" (link project "status.svg") (link project))]
+     [:h2 "HTML with SVG image"]
+     [:code
+      (html-image "Dependencies Status" (link project "status.svg") (link project))]]
+    [:section.installation-instructions.row
+     [:h2 "Markdown with PNG image"]
+     [:code (md-image "Dependencies Status" (link project "status.png") (link project))]
+     [:h2 "HTML with PNG image"]
+     [:code
+      (html-image "Dependencies Status" (link project "status.png") (link project))]]
+    [:section.installation-instructions.row
+     [:h2 "Clojars downloads badge - Markdown with SVG image"]
+     [:code (md-image "Downloads" (link project "downloads.svg") (link project))]
+     [:h2 "Clojars downloads badge - HTML with SVG image"]
+     [:code
+      (html-image "Downloads" (link project "downloads.svg") (link project))]]]
+   (common-views/common-footer)])
 
 (defn index [project]
   (html5 {:lang "en"}
-    [:head
-     [:title (str "Deps Versions: " (:name project))]
-     (common-views/common-head)
-     (common-views/ga)]
-    [:body
-      (common-views/header)
-      [:article.project-content
-        [:header.row
-         [:h1
-           [:a {:href (:github-url project)} (:name project)]
-           [:span.version (:version project)]]
-         [:h2 (:description project)]
-         [:div.badges
-           [:img {:src (link project "downloads.svg") :alt "Downloads"}]
-           (if (> (:out-of-date (:stats project)) 0)
-             [:img {:src "https://cdn.jarkeeper.com/images/out-of-date.svg" :alt "Outdated dependencies"}]
-             [:img {:src "https://cdn.jarkeeper.com/images/up-to-date.svg" :alt "Up to date dependencies"}])]]
-        [:section.dependencies.row
-          (render-stats (:stats project))
-          (render-table "Dependency" (:deps project))
-          (if (> (count (:plugins project)) 0)
-            (html
-              (render-stats (:plugins-stats project))
-              (render-table "Plugin" (:plugins project))))
-         (for [profile (:profiles project)]
-           (if (first profile)
-             (html
-               (render-stats (nth profile 2))
-               (render-table (name (first profile)) (second profile)))))]
-
-       [:section.installation-instructions.row
-        [:h2 "Markdown with SVG image"]
-        [:code (md-image "Dependencies Status" (link project "status.svg") (link project))]
-        [:h2 "HTML with SVG image"]
-        [:code
-         (html-image "Dependencies Status" (link project "status.svg") (link project))]]
-      [:section.installation-instructions.row
-       [:h2 "Markdown with PNG image"]
-       [:code (md-image "Dependencies Status" (link project "status.png") (link project))]
-       [:h2 "HTML with PNG image"]
-       [:code
-        (html-image "Dependencies Status" (link project "status.png") (link project))]]
-       [:section.installation-instructions.row
-        [:h2 "Clojars downloads badge - Markdown with SVG image"]
-        [:code (md-image "Downloads" (link project "downloads.svg") (link project))]
-        [:h2 "Clojars downloads badge - HTML with SVG image"]
-        [:code
-         (html-image "Downloads" (link project "downloads.svg") (link project))]]]
-     (common-views/common-footer)]))
+    (head project)
+    (body project)))
