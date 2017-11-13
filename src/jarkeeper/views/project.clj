@@ -81,8 +81,8 @@
      [:div.badges
       [:img {:src (link project "downloads.svg") :alt "Downloads"}]
       (if (> (:out-of-date (:stats project)) 0)
-        [:img {:src "https://cdn.jarkeeper.com/images/out-of-date.svg" :alt "Outdated dependencies"}]
-        [:img {:src "https://cdn.jarkeeper.com/images/up-to-date.svg" :alt "Up to date dependencies"}])]]
+        [:img {:src "/images/out-of-date.svg" :alt "Outdated dependencies"}]
+        [:img {:src "/images/up-to-date.svg" :alt "Up to date dependencies"}])]]
     [:section.dependencies.row
      (render-stats (:stats project))
      (render-table "Dependency" (:deps project))

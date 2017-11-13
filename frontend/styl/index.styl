@@ -3,18 +3,22 @@
 @import "font-awesome.css"
 @import "pygments.css"
 
-
-$text-color = black;
+$deps-blue = #3d4773
+$up-to-date = #1acc1a;
+$out-of-date = #e03e62;
+$text-color = #222;
 $link-color = #eb4d94;
 $visited-link-color = #9e0047;
-$code-color = #99eb52;
-$code-background = #3a434a;
-$header-color = #3d4773;
+$code-color = $deps-blue;
+$code-background = #f5f5f5;
+$header-color = $deps-blue;
+$highlight-color = #99eb52
 $quote-background = #e8eaeb;
 $main-grey = #e8eaeb;
 $additional-grey = #e1e5e8;
 
 
+table
 
 body
   font-size: 14px;
@@ -94,7 +98,7 @@ body > header.header
 body > footer.row
   & p.licence
     font-style: italic;
-    color: $code-background;
+    color: $deps-blue;
     margin: 35px 12px 20px;
 
 .row > .content
@@ -163,11 +167,11 @@ article.project-content
   & p.discussion-link
     margin-top: 20px;
     font-style: italic;
-    color: $code-background;
+    color: $deps-blue;
 
   & ul
   & ol
-    color: $code-background;
+    color: $deps-blue;
     margin-left: 15px;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -219,15 +223,18 @@ span.number
   margin-right: 5px;
   color: $header-color;
 
+span.stats-label
+  color: #222;
+
 span.status
   width: 16px;
   height: 16px;
   display: inline-block;
   border-radius: 2px;
   &.up-to-date
-    background-color: #99eb52;
+    background-color: $up-to-date;
   &.out-of-date
-    background-color: #eb4d94;
+    background-color: $out-of-date;
 
 table
   & th

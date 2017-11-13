@@ -601,7 +601,7 @@ ul.icons li [class*=" icon-"] {
 .vg { color: #19177C } /* Name.Variable.Global */
 .vi { color: #19177C } /* Name.Variable.Instance */
 .il { color: #666666 } /* Literal.Number.Integer.Long */
-body{font-size:14px;line-height:1.4;font-family:'karla',sans-serif;color:#000}
+table,body{font-size:14px;line-height:1.4;font-family:'karla',sans-serif;color:#222}
 h1,h2,h3,h4,h5,h6,p,span{font-family:'karla',sans-serif}
 div.logo-collection{display:flex;justify-content:center;align-items:center;}
 div.logo-collection h1{margin:0 .2rem;font-weight:normal;font-size:2rem;color:#3d4773}
@@ -617,21 +617,21 @@ body > header.header nav ul li{height:100%;display:inline-block;text-transform:u
 body > header.header nav ul li.active,body > header.header nav ul li:hover{background-color:#3d4773;color:#fff;}
 body > header.header nav ul li.active a,body > header.header nav ul li:hover a,body > header.header nav ul li.active a:visited,body > header.header nav ul li:hover a:visited{color:#fff !important}
 body > header.header nav ul li a,body > header.header nav ul li a:visited{color:#000 !important;font-weight:bold;font-size:18px;line-height:1.2}
-body > footer.row p.licence{font-style:italic;color:#3a434a;margin:35px 12px 20px}
+body > footer.row p.licence{font-style:italic;color:#3d4773;margin:35px 12px 20px}
 .row > .content{width:600px;margin:0 auto;position:relative;}
 .row > .content a{color:#eb4d94;}
 .row > .content a:visited{color:#9e0047}
 article.post-content h1,article.docs-content h1,article.project-content h1{font-weight:bold;font-size:18px;line-height:1.2;text-transform:uppercase}
 article.post-content h2,article.docs-content h2,article.project-content h2{margin-top:35px;margin-bottom:15px;font-weight:bold;font-size:18px;line-height:1.2;color:#3d4773}
-article.post-content header h2,article.docs-content header h2,article.project-content header h2{color:#000;font-weight:normal}
+article.post-content header h2,article.docs-content header h2,article.project-content header h2{color:#222;font-weight:normal}
 article.post-content ul,article.docs-content ul,article.project-content ul,article.post-content ol,article.docs-content ol,article.project-content ol{list-style-position:inside}
-article.post-content code,article.docs-content code,article.project-content code,article.post-content pre[class="brush: clojure"],article.docs-content pre[class="brush: clojure"],article.project-content pre[class="brush: clojure"],article.post-content pre[class="brush: shell"],article.docs-content pre[class="brush: shell"],article.project-content pre[class="brush: shell"],article.post-content div.highlight,article.docs-content div.highlight,article.project-content div.highlight{font-family:Courier,monospace;font-weight:normal;color:#99eb52;background-color:#3a434a;display:block;margin:15px;padding:10px 15px;}
+article.post-content code,article.docs-content code,article.project-content code,article.post-content pre[class="brush: clojure"],article.docs-content pre[class="brush: clojure"],article.project-content pre[class="brush: clojure"],article.post-content pre[class="brush: shell"],article.docs-content pre[class="brush: shell"],article.project-content pre[class="brush: shell"],article.post-content div.highlight,article.docs-content div.highlight,article.project-content div.highlight{font-family:Courier,monospace;font-weight:normal;color:#3d4773;background-color:#f5f5f5;display:block;margin:15px;padding:10px 15px;}
 article.post-content code .s,article.docs-content code .s,article.project-content code .s,article.post-content pre[class="brush: clojure"] .s,article.docs-content pre[class="brush: clojure"] .s,article.project-content pre[class="brush: clojure"] .s,article.post-content pre[class="brush: shell"] .s,article.docs-content pre[class="brush: shell"] .s,article.project-content pre[class="brush: shell"] .s,article.post-content div.highlight .s,article.docs-content div.highlight .s,article.project-content div.highlight .s{color:#eb4d94}
 article.post-content code .p,article.docs-content code .p,article.project-content code .p,article.post-content pre[class="brush: clojure"] .p,article.docs-content pre[class="brush: clojure"] .p,article.project-content pre[class="brush: clojure"] .p,article.post-content pre[class="brush: shell"] .p,article.docs-content pre[class="brush: shell"] .p,article.project-content pre[class="brush: shell"] .p,article.post-content div.highlight .p,article.docs-content div.highlight .p,article.project-content div.highlight .p,article.post-content code .o,article.docs-content code .o,article.project-content code .o,article.post-content pre[class="brush: clojure"] .o,article.docs-content pre[class="brush: clojure"] .o,article.project-content pre[class="brush: clojure"] .o,article.post-content pre[class="brush: shell"] .o,article.docs-content pre[class="brush: shell"] .o,article.project-content pre[class="brush: shell"] .o,article.post-content div.highlight .o,article.docs-content div.highlight .o,article.project-content div.highlight .o,article.post-content code .se,article.docs-content code .se,article.project-content code .se,article.post-content pre[class="brush: clojure"] .se,article.docs-content pre[class="brush: clojure"] .se,article.project-content pre[class="brush: clojure"] .se,article.post-content pre[class="brush: shell"] .se,article.docs-content pre[class="brush: shell"] .se,article.project-content pre[class="brush: shell"] .se,article.post-content div.highlight .se,article.docs-content div.highlight .se,article.project-content div.highlight .se{color:#e1e5e8}
 article.post-content code .mi,article.docs-content code .mi,article.project-content code .mi,article.post-content pre[class="brush: clojure"] .mi,article.docs-content pre[class="brush: clojure"] .mi,article.project-content pre[class="brush: clojure"] .mi,article.post-content pre[class="brush: shell"] .mi,article.docs-content pre[class="brush: shell"] .mi,article.project-content pre[class="brush: shell"] .mi,article.post-content div.highlight .mi,article.docs-content div.highlight .mi,article.project-content div.highlight .mi,article.post-content code .mo,article.docs-content code .mo,article.project-content code .mo,article.post-content pre[class="brush: clojure"] .mo,article.docs-content pre[class="brush: clojure"] .mo,article.project-content pre[class="brush: clojure"] .mo,article.post-content pre[class="brush: shell"] .mo,article.docs-content pre[class="brush: shell"] .mo,article.project-content pre[class="brush: shell"] .mo,article.post-content div.highlight .mo,article.docs-content div.highlight .mo,article.project-content div.highlight .mo,article.post-content code .mf,article.docs-content code .mf,article.project-content code .mf,article.post-content pre[class="brush: clojure"] .mf,article.docs-content pre[class="brush: clojure"] .mf,article.project-content pre[class="brush: clojure"] .mf,article.post-content pre[class="brush: shell"] .mf,article.docs-content pre[class="brush: shell"] .mf,article.project-content pre[class="brush: shell"] .mf,article.post-content div.highlight .mf,article.docs-content div.highlight .mf,article.project-content div.highlight .mf{color:#e8eaeb}
 article.post-content p,article.docs-content p,article.project-content p{margin-top:0;margin-bottom:7px}
-article.post-content p.discussion-link,article.docs-content p.discussion-link,article.project-content p.discussion-link{margin-top:20px;font-style:italic;color:#3a434a}
-article.post-content ul,article.docs-content ul,article.project-content ul,article.post-content ol,article.docs-content ol,article.project-content ol{color:#3a434a;margin-left:15px;margin-top:20px;margin-bottom:20px}
+article.post-content p.discussion-link,article.docs-content p.discussion-link,article.project-content p.discussion-link{margin-top:20px;font-style:italic;color:#3d4773}
+article.post-content ul,article.docs-content ul,article.project-content ul,article.post-content ol,article.docs-content ol,article.project-content ol{color:#3d4773;margin-left:15px;margin-top:20px;margin-bottom:20px}
 article.post-content blockquote,article.docs-content blockquote,article.project-content blockquote{border-left:5px solid #eb4d94;background-color:#e8eaeb;font-style:italic;font-size:16px;margin:15px 0;padding:15px 30px;}
 article.post-content blockquote p,article.docs-content blockquote p,article.project-content blockquote p{margin:0;padding:0;font-size:16px}
 section h2,header h2{font-size:1.1em}
@@ -642,9 +642,10 @@ section.summary{margin-bottom:1em;}
 section.summary ul li{list-style:none;display:inline-block}
 section.summary ul span{vertical-align:middle}
 span.number{margin-left:10px;margin-right:5px;color:#3d4773}
+span.stats-label{color:#222}
 span.status{width:16px;height:16px;display:inline-block;border-radius:2px;}
-span.status.up-to-date{background-color:#99eb52}
-span.status.out-of-date{background-color:#eb4d94}
+span.status.up-to-date{background-color:#1acc1a}
+span.status.out-of-date{background-color:#e03e62}
 table th{text-transform:uppercase}
 table td.status-column{text-align:center}
 table tbody{font-size:1.1em}
