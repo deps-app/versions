@@ -621,6 +621,7 @@ body > footer.row p.licence{font-style:italic;color:#3d4773;margin:35px 12px 20p
 .row > .content{width:600px;margin:0 auto;position:relative;}
 .row > .content a{color:#eb4d94;}
 .row > .content a:visited{color:#9e0047}
+article.post-content,article.docs-content,article.project-content{padding:0 5px;}
 article.post-content h1,article.docs-content h1,article.project-content h1{font-weight:bold;font-size:18px;line-height:1.2;text-transform:uppercase}
 article.post-content h2,article.docs-content h2,article.project-content h2{margin-top:35px;margin-bottom:15px;font-weight:bold;font-size:18px;line-height:1.2;color:#3d4773}
 article.post-content header h2,article.docs-content header h2,article.project-content header h2{color:#222;font-weight:normal}
@@ -653,12 +654,14 @@ form.find-form{text-align:center;}
 form.find-form label{font-size:1.1em}
 button{background-color:#fff;color:#3d4773;text-transform:uppercase}
 #repo-url{height:38px;padding:0 10px}
-article.project-content header{position:relative;}
-article.project-content header .badges{position:absolute;right:0;top:10px;}
-article.project-content header .badges img{margin-left:10px}
+article.project-content header .header-line{display:flex;justify-content:space-between;flex-wrap:wrap;}
+article.project-content header .header-line h1{display:flex}
+article.project-content header .header-line .badges{display:flex;justify-content:space-between;}
+article.project-content header .header-line .badges .gap{flex:0 0 10px;width:10px}
+article.project-content header .header-line img{object-fit:contain}
 a{color:#3d4773}
-section.installation-instructions > code{-webkit-user-select:all;-moz-user-select:all;-ms-user-select:all;user-select:all}
-article.index-content{background:#3d4773;border-top:1px solid #14a3d0;border-bottom:1px solid #14a3d0;padding:60px 0;margin:30px 0;}
+section.installation-instructions > code{-webkit-user-select:all;-moz-user-select:all;-ms-user-select:all;user-select:all;overflow:scroll}
+article.index-content{background:#3d4773;border-top:1px solid #14a3d0;border-bottom:1px solid #14a3d0;padding:60px 5px;margin:30px 0;}
 article.index-content h1{color:#fff;font-weight:normal;text-transform:none;text-align:center;font-size:30px;margin-bottom:30px}
 article.index-content h2{color:#fff;margin-top:15px;text-align:center;font-weight:normal;font-size:25px}
 article.index-content h3{color:#fff;margin-top:15px;text-align:center;font-weight:normal;font-size:20px}

@@ -17,7 +17,7 @@
         [:span.status.out-of-date {:title "Out of date"}])]]))
 
 (defn- render-stats [stats]
-  [:section.summary.row
+  [:section.summary
    [:ul
     [:li.small-12.large-4.columns
      [:span.number (:total stats)]
@@ -74,15 +74,18 @@
    (common-views/header)
    [:article.project-content
     [:header.row
-     [:h1
-      [:a {:href (:github-url project)} (:name project)]
-      [:span.version (:version project)]]
+     [:div.header-line
+      [:h1
+       [:a {:href (:github-url project)} (:name project)]
+       [:span.version (:version project)]]
+      [:div.badges
+       [:img {:src (link project "downloads.svg") :alt "Downloads"}]
+       [:div.gap]
+       (if (> (:out-of-date (:stats project)) 0)
+         [:img {:src "/images/out-of-date.svg" :alt "Outdated dependencies"}]
+         [:img {:src "/images/up-to-date.svg" :alt "Up to date dependencies"}])]]
      [:h2 (:description project)]
-     [:div.badges
-      [:img {:src (link project "downloads.svg") :alt "Downloads"}]
-      (if (> (:out-of-date (:stats project)) 0)
-        [:img {:src "/images/out-of-date.svg" :alt "Outdated dependencies"}]
-        [:img {:src "/images/up-to-date.svg" :alt "Up to date dependencies"}])]]
+     ]
     [:section.dependencies.row
      (render-stats (:stats project))
      (render-table "Dependency" (:deps project))

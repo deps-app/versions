@@ -114,6 +114,8 @@ body > footer.row
 article.post-content
 article.docs-content
 article.project-content
+  padding: 0px 5px;
+
   & h1
     font-weight: bold;
     font-size: 18px;
@@ -259,20 +261,24 @@ button
   height: 38px;
   padding: 0 10px;
 
+article.project-content header .header-line
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 
-article.project-content
+  & h1
+    display: flex;
 
-  & header
-    position: relative;
+  & .badges
+    display: flex;
+    justify-content: space-between;
 
-    & .badges
-      position: absolute;
-      right: 0;
-      top: 10px;
-      & img
-        margin-left: 10px;
+    & .gap
+      flex: 0 0 10px;
+      width: 10px;
 
-
+  img
+    object-fit: contain;
 
 a
   color: $header-color;
@@ -283,13 +289,14 @@ section.installation-instructions > code
   -moz-user-select: all;
   -ms-user-select: all;
   user-select: all;
+  overflow: scroll;
 
 // Landing page specific styles
 article.index-content
   background: $header-color;
   border-top: 1px solid #14a3d0;
   border-bottom: 1px solid #14a3d0;
-  padding: 60px 0;
+  padding: 60px 5px;
   margin: 30px 0;
 
   & h1
