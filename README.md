@@ -14,6 +14,10 @@ Versions is based off the fine work that [Hashobject](http://hashobject.com) has
   * https://david-dm.org
   * https://gemnasium.com/
 
+## Contributing
+
+See [CONTRIBUTING.md](/CONTRIBUTING.md) for notes on how to contribute, and [DEVELOPERS.md](/DEVELOPERS.md) for notes on how to setup a development environment. 
+
 ## License
 
 Copyright © 2013-2017 Hashobject Ltd (team@hashobject.com), 2017 [Deps](https://www.deps.co).

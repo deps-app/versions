@@ -1,6 +1,8 @@
 # Contributing to Deps Versions
 
-Thank you for taking the time to contribute!
+Thank you for taking the time to contribute! 
+
+You can also see notes on how to setup a development environment at [DEVELOPERS.md](/DEVELOPERS.md).
 
 ## Pull requests
 

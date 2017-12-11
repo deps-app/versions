@@ -3,6 +3,7 @@
 ## Running
 
 ```console
+$ docker-compose up
 $ lein ring server
 ```
 
