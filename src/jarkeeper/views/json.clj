@@ -11,7 +11,8 @@
      :is-out-of-date out-of-date
      :latest-version latest-version}))
 
-(defn transform-stats [{:keys [total up-to-date out-of-date]}]
+(defn transform-stats [{:keys [total up-to-date out-of-date]
+                        :or {total 0 up-to-date 0 out-of-date 0}}]
   (let [is-up-to-date (= total up-to-date)
         is-out-of-date (not is-up-to-date)]
     {:total          total
