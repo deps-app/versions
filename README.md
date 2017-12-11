@@ -7,6 +7,8 @@ Versions is a tool for tracking your Clojure project's dependencies. You can add
 
 Versions is based off the fine work that [Hashobject](http://hashobject.com) has done on [Jarkeeper](https://github.com/hashobject/jarkeeper.com). Versions was forked and launched after the Jarkeeper service stopped running in late 2017.
 
+If you find Deps Versions useful, consider looking at [Deps](https://www.deps.co) for your private Maven repository hosting. Thanks! 
+
 ## Inspirations
 
   * https://github.com/xsc/ancient-clj
