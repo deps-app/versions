@@ -19,7 +19,8 @@
             [environ.core :refer [env]]
             [sentry-clj.ring :as sentry-ring]
             [clojure.string :as str]
-            [sentry-clj.core :as sentry])
+            [sentry-clj.core :as sentry]
+            [ring.util.response :as response])
 
   (:import (java.io PushbackReader)
            [java.text SimpleDateFormat]
@@ -120,6 +121,16 @@
     (let [response (handler request)]
       (assoc-in response [:headers "Content-Security-Policy"] csp))))
 
+(defn- default-error
+  "A very bare-bones error message. Ignores the request and exception."
+  [req e]
+  (log/error e (str "Error in" (:uri req)))
+  (-> (str "<html><head><title>Error</title></head>"
+           "<body><p>Deps Internal Server Error</p></body></html>")
+      (response/response)
+      (response/content-type "text/html")
+      (response/status 500)))
+
 (def app
   (-> #'app-routes
       (wrap-json-response)
@@ -131,7 +142,7 @@
       (cond/if production? ssl/wrap-ssl-redirect)
       (cond/if production? ssl/wrap-hsts)
       (ssl/wrap-forwarded-scheme)
-      (sentry-ring/wrap-report-exceptions nil {})))
+      (sentry-ring/wrap-report-exceptions nil {:error-fn default-error})))
 
 (defn -main [& args]
   (let [ip "0.0.0.0"

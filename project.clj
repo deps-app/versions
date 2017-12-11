@@ -19,7 +19,11 @@
                  [ring.middleware.conditional "0.2.0"]
                  [clj-http "3.7.0"]
                  [io.sentry/sentry-clj "0.5.1"]
-                 [com.taoensso/carmine "2.16.0"]]
+                 [com.taoensso/carmine "2.16.0"]
+                 [ch.qos.logback/logback-classic
+                  "1.2.3"
+                  :exclusions
+                  [org.slf4j/slf4j-api]]]
   :main jarkeeper.core
   :ring {:handler jarkeeper.core/app}
   :plugins [[lein-ring "0.12.1"]
