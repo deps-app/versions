@@ -70,7 +70,7 @@
 ;; TODO: pipeline results checking
 ;; TODO: Generalise into a generic cache
 
-(defn outdated? [dependency]
+(defn outdated? [redis dependency]
   ;; Check redis for answer for version
   ;; If redis has it, return it
   ;; If redis doesn't have it
@@ -78,16 +78,16 @@
   ;;   store it for 3600
   ;;   return it
   (let [k (dependency-key dependency)
-        outdated-info (wcar* (car/get k))]
+        outdated-info (wcar* redis (car/get k))]
     (if (some? outdated-info)
       ;; Match anc/artifact/outdated? API. We store false, because we can't store nil.
       (if (false? outdated-info) nil outdated-info)
       (let [outdated-info (anc/artifact-outdated? dependency {:snapshots? false :qualified? false})]
-        (wcar* (car/setex k 3600 (if (nil? outdated-info) false outdated-info)))
+        (wcar* redis (car/setex k 3600 (if (nil? outdated-info) false outdated-info)))
         outdated-info))))
 
-(defn check-deps [deps]
-  (map #(conj % (outdated? %)) deps))
+(defn check-deps [redis deps]
+  (map #(conj % (outdated? redis %)) deps))
 
 (defn calculate-stats [deps]
   (let [up-to-date-deps (remove nil? (map (fn [dep] (if (nil? (last dep)) dep nil)) deps))
@@ -97,20 +97,20 @@
                :out-of-date (count out-of-date-deps)}]
     stats))
 
-(defn check-profiles [profiles]
+(defn check-profiles [redis profiles]
   (map (fn [profile-entry]
          (let [profile (val profile-entry)
                profile-name (key profile-entry)]
            (if (not (starting-num? profile-name))
              (if-let [dependencies (concat (:dependencies profile) (:plugins profile))]
-               (if-let [deps (check-deps dependencies)]
+               (if-let [deps (check-deps redis dependencies)]
                  [profile-name deps (calculate-stats deps)])))))
        profiles))
 
-(defn boot-project-map [repo-owner repo-name]
+(defn boot-project-map [redis repo-owner repo-name]
   (let [github-url (str "https://github.com/" repo-owner "/" repo-name)]
     (if-let [dependencies (read-build-boot repo-owner repo-name)]
-      (let [deps (check-deps dependencies)
+      (let [deps (check-deps redis dependencies)
             _ (println "boot-build deps" read-boot-deps)
             stats (calculate-stats deps)
             result {:boot?      true
@@ -119,20 +119,19 @@
                     :repo-owner repo-owner
                     :github-url github-url
                     :deps       deps
-                    :stats      stats
-                    }]
+                    :stats      stats}]
         (log/info "boot project map" result)
         result))))
 
-(defn lein-project-map [repo-owner repo-name]
+(defn lein-project-map [redis repo-owner repo-name]
   (let [github-url (str "https://github.com/" repo-owner "/" repo-name)]
     (if-let [project-clj-content (read-project-clj repo-owner repo-name)]
       (let [[_ project-name version & info] project-clj-content
             _ (println "project-clj" project-clj-content)
             info-map (apply hash-map info)
-            deps (check-deps (:dependencies info-map))
-            plugins (check-deps (:plugins info-map))
-            profiles (check-profiles (:profiles info-map))
+            deps (check-deps redis (:dependencies info-map))
+            plugins (check-deps redis (:plugins info-map))
+            profiles (check-profiles redis (:profiles info-map))
             stats (calculate-stats deps)
             plugins-stats (calculate-stats plugins)
             result (assoc info-map
@@ -150,9 +149,9 @@
         (log/info "project map" result profiles)
         result))))
 
-(defn project-map [repo-owner repo-name]
-  (let [lein-result (future (lein-project-map repo-owner repo-name))
-        boot-result (future (boot-project-map repo-owner repo-name))]
+(defn project-map [redis repo-owner repo-name]
+  (let [lein-result (future (lein-project-map redis repo-owner repo-name))
+        boot-result (future (boot-project-map redis repo-owner repo-name))]
     (if (nil? @lein-result)
       @boot-result
       @lein-result)))
