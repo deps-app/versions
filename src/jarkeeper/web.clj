@@ -16,7 +16,6 @@
             [jarkeeper.views.project :as project-view]
             [jarkeeper.views.json :as project-json]
             [jarkeeper.redis :refer [new-redis]]
-            [environ.core :refer [env]]
             [sentry-clj.ring :as sentry-ring]
             [clojure.string :as str]
             [sentry-clj.core :as sentry]
