@@ -27,10 +27,6 @@
                  [aero "1.1.2"]
                  [com.stuartsierra/component "0.3.2"]]
   :main jarkeeper.core
-  :ring {:handler jarkeeper.core/app}
-  :plugins [[lein-ring "0.12.1"]
-            [lein-dotenv "1.0.0"]]
-  :profiles {:dev  {:dependencies [[ring-mock "0.1.5"]
-                                   [ring/ring-devel "1.6.3"]]
-                    :ring {:open-browser? true :stacktraces? true :auto-reload? true :port 3002}}
-             :prod {:ring {:open-browser? false, :stacktraces? false, :auto-reload? false}}})
+  :profiles {:dev {:dependencies [[reloaded.repl "0.2.4"]]
+                   :source-paths ["dev"]
+                   :repl-options {:init-ns user}}})
