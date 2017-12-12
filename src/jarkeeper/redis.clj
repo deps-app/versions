@@ -1,6 +1,17 @@
 (ns jarkeeper.redis
-  (:require [taoensso.carmine :as car :refer [wcar]]
-            [environ.core :refer [env]]))
+  (:require [com.stuartsierra.component :as component]
+            [taoensso.carmine :as car :refer [wcar]]))
 
-(def server1-conn {:spec {:uri (:redis-url env)}}) ; See `wcar` docstring for opts
-(defmacro wcar* [& body] `(car/wcar server1-conn ~@body))
+(defmacro wcar* [redis & body] `(car/wcar (:redis ~redis) ~@body))
+
+(defrecord Redis [uri]
+  component/Lifecycle
+  (start [component]
+    (if (:redis component)
+      component
+      (assoc component :redis {:spec {:uri uri}})))
+  (stop [component]
+    (dissoc component :redis)))
+
+(defn new-redis [uri]
+  (map->Redis {:uri uri}))
