@@ -4,7 +4,8 @@
 
 ```console
 $ docker-compose up
-$ lein ring server
+$ lein repl
+user> (go)
 ```
 
 ## Styles
