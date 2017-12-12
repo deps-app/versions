@@ -151,7 +151,7 @@
   [redis host port]
   (-> (app redis)
       (run-jetty {:join? false
-                  :host host
+                  #_ #_ :host host
                   :port port})))
 
 (defrecord JettyWebServer [redis host port]
