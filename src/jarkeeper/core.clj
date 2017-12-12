@@ -4,7 +4,8 @@
             [clojure.java.io :as io]
             [com.stuartsierra.component :as component]
             [jarkeeper.redis :refer [new-redis]]
-            [jarkeeper.web :refer [new-jetty-web-server]]))
+            [jarkeeper.web :refer [new-jetty-web-server]]
+            [clojure.tools.logging :as log]))
 
 (defn config
   "Read EDN config, with the given profile. See Aero docs at
@@ -20,8 +21,9 @@
   ([]
    (new-system :dev))
   ([profile]
-   (let [config (config profile)
-         _ (println "new-system ====================> with profile:" profile)]
+   (let [config (config profile)]
+     (log/info "new-system ====================> with profile:" profile)
+     (log/info "config:" (prn-str (dissoc config :redis-uri)))
      (component/system-map
       :redis (new-redis (:redis-uri config))
       :host (:host config)
@@ -29,6 +31,8 @@
       :webserver (component/using (new-jetty-web-server) [:redis :host :port])))))
 
 (defn -main
-  []
-  (new-system :prod)
-  @(promise))
+  [& args]
+  (let [profile (some-> args first keyword)
+        system (new-system (or profile :prod))]
+    (component/start-system system)
+    @(promise)))
