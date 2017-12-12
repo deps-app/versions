@@ -23,7 +23,9 @@
                  [ch.qos.logback/logback-classic
                   "1.2.3"
                   :exclusions
-                  [org.slf4j/slf4j-api]]]
+                  [org.slf4j/slf4j-api]]
+                 [aero "1.1.2"]
+                 [com.stuartsierra/component "0.3.2"]]
   :main jarkeeper.core
   :ring {:handler jarkeeper.core/app}
   :plugins [[lein-ring "0.12.1"]
