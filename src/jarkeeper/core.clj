@@ -1,10 +1,10 @@
 (ns jarkeeper.core
+  (:gen-class)
   (:require [aero.core :as aero]
             [clojure.java.io :as io]
             [com.stuartsierra.component :as component]
             [jarkeeper.redis :refer [new-redis]]
-            [jarkeeper.web :refer [new-jetty-web-server]])
-  (:gen-class))
+            [jarkeeper.web :refer [new-jetty-web-server]]))
 
 (defn config
   "Read EDN config, with the given profile. See Aero docs at
