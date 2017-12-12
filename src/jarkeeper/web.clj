@@ -19,7 +19,6 @@
             [sentry-clj.ring :as sentry-ring]
             [clojure.string :as str]
             [sentry-clj.core :as sentry]
-            [ring.util.response :as response]
             [aero.core :as aero]
             [com.stuartsierra.component :as component])
 
@@ -130,9 +129,9 @@
   (log/error e (str "Error in" (:uri req)))
   (-> (str "<html><head><title>Error</title></head>"
            "<body><p>Deps Internal Server Error</p></body></html>")
-      (response/response)
-      (response/content-type "text/html")
-      (response/status 500)))
+      (resp/response)
+      (resp/content-type "text/html")
+      (resp/status 500)))
 
 (defn app
   [redis]
