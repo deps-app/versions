@@ -14,8 +14,7 @@
      title]
     [:br]
     [:a {:href (str "/" slug) :title "Dependencies Status"}
-     [:img {:src (format "https://versions.deps.co/%s/status.svg" slug)}]]])
-  )
+     [:img {:src (format "https://versions.deps.co/%s/status.svg" slug)}]]]))
 
 (defn index []
   (html5 {:lang "en"}
