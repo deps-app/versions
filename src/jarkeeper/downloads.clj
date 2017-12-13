@@ -1,8 +1,7 @@
 (ns jarkeeper.downloads
-  (:require [clojure.java.io :as io]
-            [clojure.string :as str]
-            [clj-http.client :as client]))
-
+  (:require [clj-http.client :as client]
+            [clojure.java.io :as io]
+            [clojure.string :as str]))
 
 (def downloads-svg-file
   (-> "public/images/downloads.svg"

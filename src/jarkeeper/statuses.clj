@@ -1,13 +1,10 @@
 (ns jarkeeper.statuses
-  (:require [clojure.java.io :as io]
-            [clojure.string :as str]
-            [clj-http.client :as client]
+  (:require [ancient-clj.core :as anc]
+            [clojure.java.io :as io]
             [clojure.tools.logging :as log]
-            [taoensso.carmine :as car]
             [jarkeeper.redis :refer [wcar*]]
-            [ancient-clj.core :as anc])
-
-  (:import (java.io PushbackReader)))
+            [taoensso.carmine :as car])
+  (:import java.io.PushbackReader))
 
 (defn- starting-num? [string]
   (some-> string
