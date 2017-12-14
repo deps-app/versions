@@ -1,8 +1,11 @@
 (ns jarkeeper.statuses-test
-  (:require [clojure.test :refer :all]
-            [jarkeeper.statuses :refer :all]
-            [clojure.java.io :as io])
-  (:import [java.io PushbackReader]))
+  (:require [clojure.java.io :as io]
+            [clojure.test :refer [deftest is testing]]
+            [jarkeeper.statuses :refer [not-clojure-or-clojurescript?
+                                        read-boot-deps
+                                        read-file
+                                        read-lein-project]])
+  (:import java.io.PushbackReader))
 
 (def project-clj-basic "
 (defproject jarkeeper \"0.5.1-SNAPSHOT\"
