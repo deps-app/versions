@@ -74,3 +74,11 @@
   (is (thrown-with-msg? RuntimeException #"EvalReader not allowed when \*read-eval\* is false\."
                         (with-open [rdr (PushbackReader. (io/reader (.getBytes build-boot-eval)))]
                           (read-lein-project (read-file rdr))))))
+
+(deftest not-clojure-or-clojurescript-test
+  (testing "that the dependencies are only true when not Clojure(Script)"
+    (is (= (map #(not-clojure-or-clojurescript? %)
+                '([org.clojure/clojure "1"]
+                  [org.clojure/clojurescript "1"]
+                  [some-jar/foo "2"]))
+           '(false false true)))))
