@@ -35,21 +35,19 @@
   (log/info params)
   (resp/redirect (str "/" (:repo-url params))))
 
-(defn png-status-resp [filepath]
+(defn img-status-resp
+  "Return the headers with no caching set along with the correct content
+  type for a given image, based on the `filepath`."
+  [filepath]
   (log/info "serving status image" filepath)
-  (-> filepath
-      (resp/resource-response)
-      (resp/header "cache-control" "no-cache")
-      (resp/header "last-modified" (last-modified))
-      (resp/header "content-type" "image/png")))
-
-(defn svg-status-resp [filepath]
-  (log/info "serving status image" filepath)
-  (-> filepath
-      (resp/resource-response)
-      (resp/header "cache-control" "no-cache")
-      (resp/header "last-modified" (last-modified))
-      (resp/header "content-type" "image/svg+xml")))
+  (let [image-suffix (last (str/split filepath #"\."))]
+    (-> filepath
+        (resp/resource-response)
+        (resp/header "cache-control" "no-cache")
+        (resp/header "last-modified" (last-modified))
+        (resp/header "content-type" (cond
+                                      (= "png" image-suffix) "image/png"
+                                      (= "svg" image-suffix) "image/svg+xml")))))
 
 (defn app-routes
   [redis]
@@ -74,15 +72,15 @@
         (let [project (statuses/project-map redis repo-owner repo-name)
               out-of-date-count (:out-of-date (:stats project))]
           (if (> out-of-date-count 0)
-            (png-status-resp "public/images/out-of-date.png")
-            (png-status-resp "public/images/up-to-date.png"))))
+            (img-status-resp "public/images/out-of-date.png")
+            (img-status-resp "public/images/up-to-date.png"))))
 
    (GET "/:repo-owner/:repo-name/status.svg" [repo-owner repo-name]
         (let [project (statuses/project-map redis repo-owner repo-name)
               out-of-date-count (:out-of-date (:stats project))]
           (if (> out-of-date-count 0)
-            (svg-status-resp "public/images/out-of-date.svg")
-            (svg-status-resp "public/images/up-to-date.svg"))))
+            (img-status-resp "public/images/out-of-date.svg")
+            (img-status-resp "public/images/up-to-date.svg"))))
 
    (GET "/:repo-owner/:repo-name/downloads.svg" [repo-owner repo-name]
         (-> (downloads/get-badge repo-owner repo-name)
