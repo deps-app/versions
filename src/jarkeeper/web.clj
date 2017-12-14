@@ -1,29 +1,24 @@
 (ns jarkeeper.web
-  (:require [compojure.core :refer [routes GET POST PUT DELETE HEAD]]
-            [ring.middleware.resource :refer [wrap-resource]]
-            [ring.middleware.json :refer [wrap-json-response]]
-            [ring.middleware.ssl :as ssl]
-            [ring.middleware.conditional :as cond]
-            [hiccup.middleware :refer [wrap-base-url]]
-            [ring.middleware.defaults :refer :all]
-            [ring.adapter.jetty :refer [run-jetty]]
-            [ring.util.response :as resp]
+  (:require [clojure.string :as str]
             [clojure.tools.logging :as log]
-            [clojure.edn :as edn]
+            [com.stuartsierra.component :as component]
+            [compojure.core :refer [GET HEAD POST routes]]
+            [hiccup.middleware :refer [wrap-base-url]]
             [jarkeeper.downloads :as downloads]
             [jarkeeper.statuses :as statuses]
             [jarkeeper.views.index :as index-view]
-            [jarkeeper.views.project :as project-view]
             [jarkeeper.views.json :as project-json]
-            [jarkeeper.redis :refer [new-redis]]
-            [sentry-clj.ring :as sentry-ring]
-            [clojure.string :as str]
+            [jarkeeper.views.project :as project-view]
+            [ring.adapter.jetty :refer [run-jetty]]
+            [ring.middleware.conditional :as cond]
+            [ring.middleware.defaults :refer :all]
+            [ring.middleware.json :refer [wrap-json-response]]
+            [ring.middleware.resource :refer [wrap-resource]]
+            [ring.middleware.ssl :as ssl]
+            [ring.util.response :as resp]
             [sentry-clj.core :as sentry]
-            [aero.core :as aero]
-            [com.stuartsierra.component :as component])
-
-  (:import (java.io PushbackReader)
-           [java.text SimpleDateFormat]
+            [sentry-clj.ring :as sentry-ring])
+  (:import java.text.SimpleDateFormat
            [java.util Locale TimeZone]))
 
 (def last-modified-formatter "EEE, dd MMM yyyy HH:mm:ss zzz")

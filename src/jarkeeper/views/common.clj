@@ -1,7 +1,6 @@
 (ns jarkeeper.views.common
-  (:use [hiccup.core :only (html)]
-        [hiccup.page :only (html5 include-css include-js)])
-  (:require [clojure.string :as string]))
+  (:require [clojure.string :as string]
+            [hiccup.page :refer [include-css]]))
 
 (defn apple-touch-icon [size]
   [:link {:rel "apple-touch-icon-precomposed" :sizes size :href (format "/images/logos/apple-touch-icon-%s.png" size)}])
