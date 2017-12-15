@@ -12,13 +12,13 @@
                  [ring-server "0.5.0"]
                  [org.clojure/tools.logging "0.4.0"]
                  [ring/ring-jetty-adapter "1.6.3"]
-                 [ancient-clj "0.3.11"]
+                 [ancient-clj "0.6.15"]
                  [ring/ring-json "0.4.0"]
                  [slingshot/slingshot "0.12.2"]
                  [environ "1.1.0"]
                  [ring.middleware.conditional "0.2.0"]
                  [clj-http "3.7.0"]
-                 [io.sentry/sentry-clj "0.5.1"]
+                 [io.sentry/sentry-clj "0.6.0"]
                  [com.taoensso/carmine "2.16.0"]
                  [ch.qos.logback/logback-classic
                   "1.2.3"
