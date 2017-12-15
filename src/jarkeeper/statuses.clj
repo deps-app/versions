@@ -83,8 +83,19 @@
         (wcar* redis (car/setex k 3600 (if (nil? outdated-info) false outdated-info)))
         outdated-info))))
 
+(defn clojure-or-clojurescript?
+  "Verifies if a `dependency` is Clojure or ClojureScript.
+
+  `dependency` format is ['foo \"123\"]"
+  [dependency]
+  (let [artifact-name (first dependency)]
+    (or (= artifact-name 'org.clojure/clojurescript)
+        (= artifact-name 'org.clojure/clojure))))
+
 (defn check-deps [redis deps]
-  (map #(conj % (outdated? redis %)) deps))
+  (remove nil? (map #(when-not (clojure-or-clojurescript? %)
+                       (conj % (outdated? redis %)))
+                    deps)))
 
 (defn calculate-stats [deps]
   (let [up-to-date-deps (remove nil? (map (fn [dep] (if (nil? (last dep)) dep nil)) deps))

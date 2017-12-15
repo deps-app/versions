@@ -1,8 +1,11 @@
 (ns jarkeeper.statuses-test
-  (:require [clojure.test :refer :all]
-            [jarkeeper.statuses :refer :all]
-            [clojure.java.io :as io])
-  (:import [java.io PushbackReader]))
+  (:require [clojure.java.io :as io]
+            [clojure.test :refer [deftest is are testing]]
+            [jarkeeper.statuses :refer [clojure-or-clojurescript?
+                                        read-boot-deps
+                                        read-file
+                                        read-lein-project]])
+  (:import java.io.PushbackReader))
 
 (def project-clj-basic "
 (defproject jarkeeper \"0.5.1-SNAPSHOT\"
@@ -74,3 +77,11 @@
   (is (thrown-with-msg? RuntimeException #"EvalReader not allowed when \*read-eval\* is false\."
                         (with-open [rdr (PushbackReader. (io/reader (.getBytes build-boot-eval)))]
                           (read-lein-project (read-file rdr))))))
+
+(deftest clojure-or-clojurescript?-test
+  (testing "that the dependencies are only true when not Clojure(Script)"
+    (are [dependency clj?] (= (clojure-or-clojurescript? dependency) clj?)
+      ['org.clojure/clojure "1.9.0"] true
+      ['org.clojure/clojurescript "1.9.0"] true
+      ['org.clojure/clojuredoc "1.0.0"] false
+      ['some-jar/foo "2"] false)))
