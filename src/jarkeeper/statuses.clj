@@ -28,8 +28,7 @@
   (some->> parsed-project-file
            (some (fn [form]
                    (if (= 'defproject (first form))
-                     form)))
-           ))
+                     form)))))
 
 (defn read-project-clj [repo-owner repo-name]
   (try
