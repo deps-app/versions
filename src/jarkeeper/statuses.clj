@@ -107,9 +107,9 @@
   (map (fn [profile-entry]
          (let [profile (val profile-entry)
                profile-name (key profile-entry)]
-           (if (not (starting-num? profile-name))
-             (if-let [dependencies (concat (:dependencies profile) (:plugins profile))]
-               (if-let [deps (check-deps redis dependencies)]
+           (when-not (starting-num? profile-name)
+             (when-let [dependencies (concat (:dependencies profile) (:plugins profile))]
+               (when-let [deps (check-deps redis dependencies)]
                  [profile-name deps (calculate-stats deps)])))))
        profiles))
 
