@@ -1,7 +1,7 @@
 (ns jarkeeper.statuses-test
   (:require [clojure.java.io :as io]
-            [clojure.test :refer [deftest is testing]]
-            [jarkeeper.statuses :refer [not-clojure-or-clojurescript?
+            [clojure.test :refer [deftest is are testing]]
+            [jarkeeper.statuses :refer [clojure-or-clojurescript?
                                         read-boot-deps
                                         read-file
                                         read-lein-project]])
@@ -78,10 +78,10 @@
                         (with-open [rdr (PushbackReader. (io/reader (.getBytes build-boot-eval)))]
                           (read-lein-project (read-file rdr))))))
 
-(deftest not-clojure-or-clojurescript-test
+(deftest clojure-or-clojurescript?-test
   (testing "that the dependencies are only true when not Clojure(Script)"
-    (is (= (map #(not-clojure-or-clojurescript? %)
-                '([org.clojure/clojure "1"]
-                  [org.clojure/clojurescript "1"]
-                  [some-jar/foo "2"]))
-           '(false false true)))))
+    (are [dependency clj?] (= (clojure-or-clojurescript? dependency) clj?)
+      ['org.clojure/clojure "1.9.0"] true
+      ['org.clojure/clojurescript "1.9.0"] true
+      ['org.clojure/clojuredoc "1.0.0"] false
+      ['some-jar/foo "2"] false)))

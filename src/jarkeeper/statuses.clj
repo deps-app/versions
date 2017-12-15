@@ -83,14 +83,17 @@
         (wcar* redis (car/setex k 3600 (if (nil? outdated-info) false outdated-info)))
         outdated-info))))
 
-(defn not-clojure-or-clojurescript?
-  "Takes `dependency` in a format of [foo \"123\"], where foo is a symbol.
-  And verifies if it's Clojure or ClojureScript."
+(defn clojure-or-clojurescript?
+  "Verifies if a `dependency` is Clojure or ClojureScript.
+
+  `dependency` format is ['foo \"123\"]"
   [dependency]
-  (nil? (re-matches #"^org.clojure/clojure(script)?$" (str (first dependency)))))
+  (let [artifact-name (first dependency)]
+    (or (= artifact-name 'org.clojure/clojurescript)
+        (= artifact-name 'org.clojure/clojure))))
 
 (defn check-deps [redis deps]
-  (remove nil? (map #(when (not-clojure-or-clojurescript? %)
+  (remove nil? (map #(when-not (clojure-or-clojurescript? %)
                        (conj % (outdated? redis %)))
                     deps)))
 
