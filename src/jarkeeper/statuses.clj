@@ -28,8 +28,7 @@
   (some->> parsed-project-file
            (some (fn [form]
                    (if (= 'defproject (first form))
-                     form)))
-           ))
+                     form)))))
 
 (defn read-project-clj [repo-owner repo-name]
   (try
@@ -99,19 +98,18 @@
 
 (defn calculate-stats [deps]
   (let [up-to-date-deps (remove nil? (map (fn [dep] (if (nil? (last dep)) dep nil)) deps))
-        out-of-date-deps (remove nil? (map (fn [dep] (if (nil? (last dep)) nil dep)) deps))
-        stats {:total       (count deps)
-               :up-to-date  (count up-to-date-deps)
-               :out-of-date (count out-of-date-deps)}]
-    stats))
+        out-of-date-deps (remove nil? (map (fn [dep] (if (nil? (last dep)) nil dep)) deps))]
+    {:total       (count deps)
+     :up-to-date  (count up-to-date-deps)
+     :out-of-date (count out-of-date-deps)}))
 
 (defn check-profiles [redis profiles]
   (map (fn [profile-entry]
          (let [profile (val profile-entry)
                profile-name (key profile-entry)]
-           (if (not (starting-num? profile-name))
-             (if-let [dependencies (concat (:dependencies profile) (:plugins profile))]
-               (if-let [deps (check-deps redis dependencies)]
+           (when-not (starting-num? profile-name)
+             (when-let [dependencies (concat (:dependencies profile) (:plugins profile))]
+               (when-let [deps (check-deps redis dependencies)]
                  [profile-name deps (calculate-stats deps)])))))
        profiles))
 
