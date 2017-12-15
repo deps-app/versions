@@ -98,11 +98,10 @@
 
 (defn calculate-stats [deps]
   (let [up-to-date-deps (remove nil? (map (fn [dep] (if (nil? (last dep)) dep nil)) deps))
-        out-of-date-deps (remove nil? (map (fn [dep] (if (nil? (last dep)) nil dep)) deps))
-        stats {:total       (count deps)
-               :up-to-date  (count up-to-date-deps)
-               :out-of-date (count out-of-date-deps)}]
-    stats))
+        out-of-date-deps (remove nil? (map (fn [dep] (if (nil? (last dep)) nil dep)) deps))]
+    {:total       (count deps)
+     :up-to-date  (count up-to-date-deps)
+     :out-of-date (count out-of-date-deps)}))
 
 (defn check-profiles [redis profiles]
   (map (fn [profile-entry]
