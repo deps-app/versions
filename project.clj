@@ -15,7 +15,6 @@
                  [ancient-clj "0.6.15"]
                  [ring/ring-json "0.4.0"]
                  [slingshot/slingshot "0.12.2"]
-                 [environ "1.1.0"]
                  [ring.middleware.conditional "0.2.0"]
                  [clj-http "3.7.0"]
                  [io.sentry/sentry-clj "0.6.0"]
