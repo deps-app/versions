@@ -18,13 +18,11 @@
 (defn create-badge [downloads]
   (str/replace downloads-svg #"PLACEHOLDER" downloads))
 
-
 (defn clojars-fetch [artifact]
   (try
     (client/get (str "https://clojars.org/api/artifacts/" artifact) {:accept :json :as :json})
     (catch Exception e
       {:data e})))
-
 
 (defn get-downloads [repo-owner repo-name]
   (let [resp-by-full-name (clojars-fetch (str repo-owner "/" repo-name))]
