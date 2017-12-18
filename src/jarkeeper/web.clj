@@ -43,7 +43,7 @@
   (let [image-suffix (last (str/split filepath #"\."))]
     (-> filepath
         (resp/resource-response)
-        (resp/header "cache-control" "no-cache")
+        (resp/header "cache-control" "max-age=300, stale-while-revalidate=30")
         (resp/header "last-modified" (last-modified))
         (resp/header "content-type" (cond
                                       (= "png" image-suffix) "image/png"
@@ -85,7 +85,7 @@
    (GET "/:repo-owner/:repo-name/downloads.svg" [repo-owner repo-name]
         (-> (downloads/get-badge repo-owner repo-name)
             (resp/response)
-            (resp/header "cache-control" "no-cache")
+            (resp/header "cache-control" "max-age=300, stale-while-revalidate=30")
             (resp/header "last-modified" (last-modified))
             (resp/header "content-type" "image/svg+xml")))
 
