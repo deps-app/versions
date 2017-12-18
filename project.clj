@@ -1,4 +1,4 @@
-(defproject co.deps/versions "0.6.0-SNAPSHOT"
+(defproject co.deps/versions "0.7.0-SNAPSHOT"
   :description "Identify outdated dependencies in your Clojure project."
   :url "https://versions.deps.co"
   :license {:name "Eclipse Public License"
