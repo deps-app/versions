@@ -1,1 +1,1 @@
-web: java -jar target/versions-0.6.0-SNAPSHOT-standalone.jar
+web: java -jar target/versions-0.7.1-SNAPSHOT-standalone.jar
