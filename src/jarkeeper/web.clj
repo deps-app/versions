@@ -64,8 +64,10 @@
             (log/info "project-def" project)
             (project-view/index project))
           (do
-            (sentry/send-event (assoc (sentry-ring/request->event r nil)
+            ;; Need to handle 404's better and not just send them to Sentry
+            #_(sentry/send-event (assoc (sentry-ring/request->event r nil)
                                       :message "Error while checking project"))
+            ;; TODO: add a flash to say not found
             (resp/redirect "/"))))
 
    (GET "/:repo-owner/:repo-name/status.png" [repo-owner repo-name]
