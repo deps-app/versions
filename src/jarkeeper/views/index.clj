@@ -40,9 +40,9 @@
      [:div.row
       [:h2 "Example projects"]
       (example-project "Reagent" "reagent-project/reagent")
-      (example-project "Buddy Sign" "funcool/buddy-sign")
+      (example-project "Leiningen" "technomancy/leiningen")
       (example-project "boot-reload" "adzerk-oss/boot-reload")
       (example-project "Elastisch" "clojurewerkz/elastisch")
-      (example-project "Honey SQL" "jkk/honeysql")
+      (example-project "Instaparse" "Engelberg/instaparse")
       (example-project "Eastwood" "jonase/eastwood" true)]
      (common-views/common-footer)]))
