@@ -41,13 +41,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-lein-
 
-      - name: Install Leiningen
-        run: |
-          mkdir -p "$HOME/bin"
-          curl -fsSL https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein > "$HOME/bin/lein"
-          chmod +x "$HOME/bin/lein"
-          echo "$HOME/bin" >> "$GITHUB_PATH"
-          lein version
+      - name: Set up Clojure
+        uses: DeLaGuardo/setup-clojure@13.2
+        with:
+          lein: "2.12.0"
 
       - name: Run tests
         run: lein test
