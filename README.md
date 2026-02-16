@@ -1,7 +1,7 @@
 # Deps Versions
 
 [![Dependencies Status](https://versions.deps.co/deps-app/versions/status.svg)](https://versions.deps.co/deps-app/versions)
-[![Circle CI](https://circleci.com/gh/deps-app/versions.svg?style=svg)](https://circleci.com/gh/deps-app/versions)
+[![CI](https://github.com/deps-app/versions/actions/workflows/test.yml/badge.svg)](https://github.com/deps-app/versions/actions/workflows/test.yml)
 
 Versions is a tool for tracking your Clojure project's dependencies. You can add a badge to your GitHub README to show whether your dependencies are current or out of date. It supports Leiningen and Boot.
 
