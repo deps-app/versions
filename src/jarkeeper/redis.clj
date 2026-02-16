@@ -19,6 +19,20 @@
     (catch Exception _
       false)))
 
+(defn- parse-redis-uri-spec [uri]
+  (let [^URI uri-object (URI. uri)
+        host (.getHost uri-object)
+        port (.getPort uri-object)
+        path (.getPath uri-object)
+        [username password] (str/split (or (.getUserInfo uri-object) "") #":" 2)
+        db (when-let [[_ db-str] (re-matches #"/(\d+)$" (or path ""))]
+             (Integer/parseInt db-str))]
+    (cond-> {:host host}
+      (pos? port) (assoc :port port)
+      (and db (pos? db)) (assoc :db db)
+      (not (str/blank? username)) (assoc :username username)
+      (not (str/blank? password)) (assoc :password password))))
+
 ;; Heroku Redis uses a self-signed certificate chain, so Java default trust
 ;; validation fails unless we explicitly opt out of peer verification.
 (defn- insecure-trust-manager []
@@ -47,8 +61,12 @@
     (if (:redis component)
       component
       (let [insecure-tls? (true-value? insecure-tls?)
-            redis-spec (cond-> {:uri uri}
-                         (and insecure-tls? (rediss-uri? uri)) (assoc :ssl-fn insecure-ssl-fn))]
+            redis-spec (if (and insecure-tls? (rediss-uri? uri))
+                         ;; Carmine's conn-spec merges parsed URI options last, which would
+                         ;; override a custom :ssl-fn with :default for rediss:// URIs.
+                         ;; Parse the URI into explicit fields so our ssl-fn is preserved.
+                         (assoc (parse-redis-uri-spec uri) :ssl-fn insecure-ssl-fn)
+                         {:uri uri})]
         (assoc component :redis {:spec redis-spec}))))
   (stop [component]
     (dissoc component :redis)))
