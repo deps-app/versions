@@ -25,7 +25,8 @@
      (log/info "new-system ====================> with profile:" profile)
      (log/info "config:" (prn-str (dissoc config :redis-uri)))
      (component/system-map
-      :redis (new-redis (:redis-uri config))
+      :redis (new-redis (:redis-uri config)
+                        (:redis-insecure-tls? config))
       :host (:host config)
       :port (:port config)
       :webserver (component/using (new-jetty-web-server) [:redis :host :port])))))

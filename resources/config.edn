@@ -1,5 +1,7 @@
 {:redis-uri #profile {:dev  "redis://localhost:6379/"
                       :prod #env REDIS_URL}
+ :redis-insecure-tls? #profile {:dev  false
+                                :prod #or [#env REDIS_INSECURE_TLS "true"]}
  :host      #profile {:dev  "localhost"
                       :prod "versions.deps.co"}
  :port      #profile {:dev  8080
